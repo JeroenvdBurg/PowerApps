@@ -1,0 +1,89 @@
+{
+  "2246f432-8f0d-4d76-a7d1-341d50ba2747": {
+    "connectionParameters": {
+      "sku": "Enterprise"
+    },
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "BudiBaseApi",
+      "iconUri": "https://az787822.vo.msecnd.net/defaulticons/api-dedicated.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_budibaseapi-5f02b4db7228f31c51-5f4ba0a801deb966a1",
+      "isCustomApiConnection": true,
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {},
+    "dataSources": [
+      "budibase"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "2246f432-8f0d-4d76-a7d1-341d50ba2747"
+  },
+  "7b97aebd-c75f-4b4c-902c-1bc34a2539bd": {
+    "connectionParameters": {
+      "sku": "Enterprise"
+    },
+    "connectionRef": {
+      "displayName": "Spatial Services",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1601/1.0.1601.3047/microsoftspatialservices/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_microsoftspatialservices"
+    },
+    "datasets": {},
+    "dataSources": [
+      "SpatialServices"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "7b97aebd-c75f-4b4c-902c-1bc34a2539bd"
+  },
+  "7fbac582-3812-42f9-8b42-338a0ecd187d": {
+    "connectionParameters": {
+      "authType": "basic",
+      "database": "postgres",
+      "privacySetting": "None",
+      "server": "db.gfxacmfiuqqohkmjbqjc.supabase.co:6543",
+      "sku": "Enterprise"
+    },
+    "connectionRef": {
+      "apiTier": "Premium",
+      "displayName": "PostgreSQL",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1610-greyhound-localization-RelayFix/1.0.1610.3091/postgresql/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_postgresql",
+      "parameterHints": {},
+      "parameterHintsV2": {},
+      "sharedConnectionId": "/providers/microsoft.powerapps/apis/shared_postgresql/connections/6eb9bfd636a94042afea6eec0e8b5629"
+    },
+    "datasets": {
+      "default": {
+        "dataSources": {
+          "public.Banda": {
+            "tableName": "[public].[Banda]"
+          },
+          "public.ChickenProduction": {
+            "tableName": "[public].[ChickenProduction]"
+          },
+          "public.ChickenTransaction": {
+            "tableName": "[public].[ChickenTransaction]"
+          },
+          "public.Farmer": {
+            "tableName": "[public].[Farmer]"
+          },
+          "public.SubFlock": {
+            "tableName": "[public].[SubFlock]"
+          }
+        }
+      }
+    },
+    "dataSources": [
+      "public.Banda",
+      "public.ChickenTransaction",
+      "public.Farmer",
+      "public.SubFlock",
+      "public.ChickenProduction"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "7fbac582-3812-42f9-8b42-338a0ecd187d"
+  }
+}

@@ -1,0 +1,199 @@
+"FarmerPerformance As screen.'phoneLayout_FluidGridWithHeaderPageLayout_ver3.0'":
+    OnHidden: =false
+    OnVisible: |-
+        =Set(
+            FarmerBandas,
+            Filter(
+                AllBandas,
+                fk_Banda_Farmer = farmerId
+            )
+        );
+
+    RectQuickActionBar3_2 As rectangle:
+        Fill: =RGBA(80, 80, 77, 1)
+        Height: =88
+        Width: =Parent.Width
+        ZIndex: =1
+
+    LblAppName3_2 As label:
+        Align: =Align.Center
+        Height: =88
+        Size: =27
+        Text: ="Banda's"
+        Width: =Parent.Width
+        ZIndex: =2
+
+    Canvas1_2 As fluidGrid.fluidGridWithBlankCard:
+        BorderThickness: =
+        Fill: =RGBA(241, 244, 249, 1)
+        Height: =Parent.Height - Self.Y
+        Width: =Parent.Width
+        Y: =RectQuickActionBar3_2.Y + RectQuickActionBar3_2.Height
+        ZIndex: =3
+
+        EggsProducedGraph_1 As dataCard.blankCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =537
+            Width: =640
+            X: =0
+            Y: =1
+            ZIndex: =3
+
+            "'Banda Graph+selector' As groupContainer.manualLayoutContainer":
+                Fill: =RGBA(241, 244, 249, 1)
+                Height: =537
+                Visible: =!IsEmpty(FarmerBandas)
+                Width: =640
+                ZIndex: =5
+
+                BandaSelector As dropdown:
+                    BorderColor: =RGBA(207, 110, 75, 1)
+                    ChevronBackground: =RGBA(207, 110, 75, 1)
+                    ChevronHoverBackground: =ColorFade(RGBA(207, 110, 75, 1), -20%)
+                    Height: =70
+                    HoverFill: =RGBA(207, 110, 75, 0.5)
+                    Items: =UniqueBandaList
+                    OnChange: |-
+                        =// Fill the production list based on the selected value
+                        
+                        Clear(ChickenProductionForFarmer);
+                        If(
+                            BandaSelector.Selected.Result = AllBandasValue,
+                            ClearCollect(
+                                ChickenProductionForFarmer,
+                                SortByColumns(
+                                    Filter(
+                                        ChickenProduction,
+                                        FarmerId = globalFarmerId
+                                    ),
+                                    "Date",
+                                    Descending
+                                )
+                            ),
+                            ClearCollect(
+                                ChickenProductionForFarmer,
+                                SortByColumns(
+                                    Filter(
+                                        ChickenProduction,
+                                        FarmerId = globalFarmerId,
+                                        BandaReference = BandaSelector.Selected.Result
+                                    ),
+                                    "Date",
+                                    Descending
+                                )
+                            )
+                        );
+                    PressedFill: =RGBA(207, 110, 75, 1)
+                    SelectionFill: =RGBA(207, 110, 75, 1)
+                    Size: =21
+                    Width: =500
+                    X: =79
+                    Y: =10
+                    ZIndex: =1
+
+                CompositeColumnChart3_1 As group:
+                    Height: =5
+                    Width: =5
+                    X: =17
+                    Y: =-75
+                    ZIndex: =2
+
+                    Title2_1 As label:
+                        Align: =Align.Center
+                        Height: =57
+                        Size: =20
+                        Text: ="Eggs produced (last 7 days)"
+                        Width: =617
+                        X: =21
+                        Y: =128
+                        ZIndex: =3
+
+                    ColumnChart3_1 As barChart:
+                        GridStyle: =GridStyle.All
+                        Height: =349
+                        ItemColorSet: =[RGBA(255, 192, 0, .6)]
+                        Items: |-
+                            =SortByColumns(
+                                AddColumns(
+                                    ChickenProductionForFarmer,
+                                    "FormattedDate",
+                                    Text(
+                                        DateValue(Date),
+                                        "[$-en-US]dd-mm"
+                                    )
+                                ),
+                                "Date",
+                                Ascending
+                            )
+                        ItemsGap: =5
+                        PaddingLeft: =20
+                        PaddingRight: =20
+                        SeriesAxisMin: =0
+                        Size: =12
+                        Width: =617
+                        X: =21
+                        XLabelAngle: =0
+                        Y: =185
+                        ZIndex: =4
+
+            "'Empty State' As groupContainer.manualLayoutContainer":
+                Height: =537
+                Visible: =IsEmpty(FarmerBandas)
+                Width: =640
+                ZIndex: =6
+
+                Group3 As group:
+                    Height: =5
+                    Width: =5
+                    X: =60
+                    Y: =60
+                    ZIndex: =4
+
+                    Label6 As label:
+                        Align: =Align.Center
+                        FontWeight: =FontWeight.Semibold
+                        Height: =70
+                        Size: =21
+                        Text: |
+                            ="Farmer has no banda's assigned yet"
+                        Width: =560
+                        X: =40
+                        Y: =40
+                        ZIndex: =1
+
+                    Icon6 As icon.Home:
+                        Color: =RGBA(207, 110, 75, 1)
+                        Height: =184
+                        Icon: =Icon.Home
+                        Width: =216
+                        X: =202
+                        Y: =150
+                        ZIndex: =2
+
+                    Label10 As label:
+                        Align: =Align.Center
+                        Height: =82
+                        Size: =21
+                        Text: ="Assign a banda in the backoffice and try again"
+                        Width: =460
+                        X: =90
+                        Y: =384
+                        ZIndex: =3
+
+    IconBackarrow1_8 As icon.ChevronLeft:
+        AccessibleLabel: =Self.Tooltip
+        Height: =88
+        Icon: =Icon.ChevronLeft
+        OnSelect: =Navigate(FarmerProductionData, ScreenTransition.UnCoverRight)
+        PaddingBottom: =24
+        PaddingLeft: =24
+        PaddingRight: =24
+        PaddingTop: =24
+        TabIndex: =0
+        Tooltip: ="Terug naar lijst"
+        Width: =88
+        ZIndex: =4
+

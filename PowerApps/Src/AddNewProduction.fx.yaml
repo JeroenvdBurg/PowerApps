@@ -1,0 +1,570 @@
+"AddNewProduction As screen.'phoneLayout_FluidGridWithHeaderPageLayout_ver3.0'":
+    Fill: =
+    OnVisible: |-
+        =Select(GetDropdownDatesFunction);
+        
+        UpdateContext({
+            locShowValidation: {
+                EggsCollected: false
+            }
+        });
+
+    RectQuickActionBar7 As rectangle:
+        Height: =88
+        Width: =Parent.Width
+        ZIndex: =1
+
+    LblAppName7 As label:
+        Align: =Align.Center
+        Fill: =PrimaryBlack
+        Height: =88
+        Size: =27
+        Text: ="Production Day"
+        Width: =Parent.Width
+        ZIndex: =2
+
+    Canvas6 As fluidGrid.fluidGridWithBlankCard:
+        BorderThickness: =0
+        Height: =Parent.Height - Self.Y
+        Width: =Parent.Width
+        Y: =RectQuickActionBar7.Y + RectQuickActionBar7.Height
+        ZIndex: =3
+
+        DataCard8 As dataCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =0
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =1044
+            Width: =Parent.Width
+            X: =0
+            Y: =0
+            ZIndex: =1
+
+            AddProductionBandaSelector As dropdown:
+                BorderColor: =PrimaryAction
+                ChevronBackground: =PrimaryAction
+                ChevronHoverBackground: =ColorFade(PrimaryAction, -20%)
+                Height: =77
+                Items: |-
+                    =Distinct(
+                            Filter(
+                                AllBandas,
+                                fk_Banda_Farmer = globalFarmerId
+                            ),
+                            Reference
+                        )
+                OnChange: |
+                    =Select(GetDropdownDatesFunction)
+                PressedFill: =PrimaryAction
+                SelectionFill: =PrimaryAction
+                Size: =21
+                TabIndex: =1
+                Width: =262
+                X: =311
+                Y: =32
+                ZIndex: =2
+
+            MortalityNumericUpDown As NumericUpDown:
+                BorderColor: =PrimaryAction
+                ButtonsColor: =PrimaryAction
+                Max: =10000
+                Min: =0
+                TabIndex: =6
+                Width: =303
+                X: =279
+                Y: =654
+                ZIndex: =3
+
+            ProductionDataEggsProducedInput As text:
+                BorderColor: =PrimaryBlack
+                Default: =
+                Format: =TextFormat.Number
+                Height: =70
+                OnChange: |-
+                    =// Simulate an onFocusChange by using the following structure:
+                    UpdateContext({locShowValidation: 
+                        Patch(locShowValidation, {EggsCollected: true})
+                    });
+                Size: =21
+                TabIndex: =3
+                Width: =261
+                X: =311
+                Y: =246
+                ZIndex: =5
+
+            SaveAndCloseButton As button:
+                DisplayMode: =If(DateTimeValue(ProductionDataDateSelector.Selected.Value) <= Today() && !IsBlank(ProductionDataEggsProducedInput.Text), DisplayMode.Edit, DisplayMode.Disabled)
+                Fill: =PrimaryAction
+                Height: =70
+                HoverFill: =ColorFade(Self.Fill, -20%)
+                OnSelect: |
+                    =// Simulate save and next click to prevent code duplication. Only go to other screen if no errors.
+                    IfError(
+                        Select(ProductionDataSaveFunction),
+                        Notify(
+                            "Couldn't store the production data locally",
+                            NotificationType.Error
+                        ),
+                        Navigate(
+                            FarmerStartSceen,
+                            ScreenTransition.UnCoverRight
+                        )
+                    )
+                Size: =24
+                TabIndex: =8
+                Text: ="Save & Close"
+                Width: =248
+                X: =63
+                Y: =939
+                ZIndex: =6
+
+            ProductionDataEggsBrokenInput As text:
+                BorderColor: =PrimaryBlack
+                Default: =
+                Format: =TextFormat.Number
+                Height: =70
+                HintText: ="0"
+                Size: =21
+                TabIndex: =4
+                Width: =261
+                X: =311
+                Y: =347
+                ZIndex: =7
+
+            Label3 As label:
+                Height: =70
+                Size: =20
+                Text: ="Eggs produced"
+                Width: =198
+                X: =56
+                Y: =246
+                ZIndex: =8
+
+            Label3_1 As label:
+                Height: =70
+                Size: =20
+                Text: ="Eggs broken"
+                Width: =180
+                X: =56
+                Y: =347
+                ZIndex: =9
+
+            ProductionDataEggsConsumedInput As text:
+                BorderColor: =PrimaryBlack
+                Default: =
+                Format: =TextFormat.Number
+                Height: =70
+                HintText: ="0"
+                Size: =21
+                TabIndex: =5
+                Width: =262
+                X: =311
+                Y: =445
+                ZIndex: =10
+
+            Label3_2 As label:
+                Height: =70
+                Size: =20
+                Text: ="Eggs consumed"
+                Width: =198
+                X: =56
+                Y: =445
+                ZIndex: =11
+
+            Label3_3 As label:
+                Height: =70
+                Size: =20
+                Text: ="Mortality"
+                Width: =198
+                X: =56
+                Y: =654
+                ZIndex: =12
+
+            ProductionDataCommentInput As text:
+                BorderColor: =PrimaryBlack
+                Default: =
+                Height: =112
+                Mode: =TextMode.MultiLine
+                Size: =21
+                TabIndex: =7
+                Width: =510
+                X: =63
+                Y: =797
+                ZIndex: =13
+
+            Label3_4 As label:
+                Height: =55
+                Size: =20
+                Text: ="Comment"
+                Width: =180
+                X: =56
+                Y: =751
+                ZIndex: =14
+
+            ProductionDataDateSelector As dropdown:
+                BorderColor: =PrimaryAction
+                ChevronBackground: =PrimaryAction
+                ChevronHoverBackground: =ColorFade(PrimaryAction, -20%)
+                Default: |-
+                    =DateValue(
+                                First(
+                                    Distinct(
+                                        SortByColumns(
+                                            UniqueProd,
+                                            "Date",
+                                            Descending
+                                        ),
+                                        Date
+                                    )
+                                ).Result
+                            ) + 1
+                Height: =73
+                Items: =colCalendarDates
+                PressedFill: =PrimaryAction
+                SelectionFill: =PrimaryAction
+                Size: =21
+                TabIndex: =1
+                Width: =262
+                X: =311
+                Y: =139
+                ZIndex: =15
+
+            SaveAndNextButton As button:
+                DisplayMode: =If(DateTimeValue(ProductionDataDateSelector.Selected.Value) <= Today() && !IsBlank(ProductionDataEggsProducedInput.Text), DisplayMode.Edit, DisplayMode.Disabled)
+                Fill: =PrimaryAction
+                Height: =70
+                HoverFill: =ColorFade(Self.Fill, -20%)
+                OnSelect: |-
+                    =// Simulate save and next click to prevent code duplication. Only go to other screen if no errors.
+                    IfError(
+                        Select(ProductionDataSaveFunction),
+                        Notify(
+                            "Couldn't store the production data locally",
+                            NotificationType.Error
+                        ),
+                        Navigate(
+                            AddNewProduction,
+                            ScreenTransition.UnCoverRight
+                        )
+                    )
+                Size: =24
+                TabIndex: =8
+                Text: ="Save & Next"
+                Width: =248
+                X: =325
+                Y: =939
+                ZIndex: =16
+
+            ProductionDataSaveFunction As button:
+                Height: =36
+                OnSelect: |
+                    =// When we collect the Banda data we only get the subflocks that are currently active.
+                    // There can only be one active SubFlock at a time.
+                    // To get the current subflock ID we can use the selected Banda.
+                    UpdateContext(
+                        {
+                            SelectedSubFlock: First(
+                                Distinct(
+                                    Filter(
+                                        AllBandas,
+                                        Reference = AddProductionBandaSelector.Selected.Result
+                                    ),
+                                    SubFlockId
+                                )
+                            ).Result
+                        }
+                    );
+                    // Check if there is an actual subflock assigned to the banda
+                    If(
+                        IsBlank(SelectedSubFlock),
+                        Notify("No subflock from banda found", NotificationType.Error),
+                    // Store new entry in local storage for future sync 
+                        Collect(
+                            ChickenProduction,
+                            {
+                                Guid: GUID(),
+                                CreatedBy: User().Email,
+                                CreatedOn: Text(Now()),
+                                SubFlockId: SelectedSubFlock,
+                                Date: Text(
+                                    ProductionDataDateSelector.Selected.Value,
+                                    "yyyy-mm-dd"
+                                ),
+                                FarmerId: globalFarmerId,
+                                BandaReference: Text(AddProductionBandaSelector.Selected.Result),
+                                EggsProduced: If(
+                                    IsBlank(ProductionDataEggsProducedInput.Text),
+                                    0,
+                                    Value(ProductionDataEggsProducedInput.Text)
+                                ),
+                                EggsBroken: If(
+                                    IsBlank(ProductionDataEggsBrokenInput.Text),
+                                    0,
+                                    Value(ProductionDataEggsBrokenInput.Text)
+                                ),
+                                EggsConsumed: If(
+                                    IsBlank(ProductionDataEggsConsumedInput.Text),
+                                    0,
+                                    Value(ProductionDataEggsConsumedInput.Text)
+                                ),
+                                Mortality: If(
+                                    IsBlank(MortalityNumericUpDown.Value),
+                                    0,
+                                    MortalityNumericUpDown.Value
+                                ),
+                                Comment: ProductionDataCommentInput.Text,
+                                NeedsSync: 1
+                            }
+                        );
+                        
+                    // Save collection in offline datastore 
+                    SaveData(
+                            ChickenProduction,
+                            "ChickenProduction"
+                        );
+                        Notify("Record stored locally");
+                    
+                    //update dropdown with new values
+                    Select(GetDropdownDatesFunction);
+                        
+                    // Clear values.
+                    Reset(ProductionDataCommentInput);
+                        Reset(ProductionDataEggsConsumedInput);
+                        Reset(ProductionDataEggsBrokenInput);
+                        Reset(ProductionDataEggsProducedInput);
+                        Reset(MortalityNumericUpDown);
+                        
+                    );
+                Size: |
+                    =8
+                Text: ="SaveFunction"
+                Visible: =false
+                Width: =38
+                X: =18
+                Y: =962
+                ZIndex: =17
+
+            Label3_7 As label:
+                Height: =70
+                Size: =20
+                Text: ="Date"
+                Width: =198
+                X: =58
+                Y: =142
+                ZIndex: =23
+
+            Results As groupContainer.manualLayoutContainer:
+                Fill: =RGBA(237, 237, 237, 1)
+                Height: =169
+                Visible: |
+                    =false
+                Width: =510
+                X: =63
+                Y: =690
+                ZIndex: =24
+
+                LayingPercentageValue As label:
+                    Height: =47
+                    Size: =28
+                    Text: =IfError((If(IsBlank(EggsCollected_Value) || IsBlank(NumberOfBirdsLabel.Text), "-", Round(EggsCollected_Value / Value(NumberOfBirdsLabel.Text) *100,0))),"-")
+                    Width: =91
+                    X: =356
+                    Y: =39
+                    ZIndex: =1
+
+                LayingPercentageLabel As label:
+                    Height: =30
+                    Size: =14
+                    Text: ="Laying %"
+                    Width: =109
+                    X: =347
+                    Y: =113
+                    ZIndex: =2
+
+                NumberOfBirdLabel As label:
+                    Height: =30
+                    Size: =14
+                    Text: |-
+                        ="# of birds"
+                    Width: =109
+                    X: =201
+                    Y: =113
+                    ZIndex: =3
+
+                NumberOfBirdsLabel As label:
+                    Height: =47
+                    Size: =28
+                    Text: |-
+                        =// Calculates the amount of the birds in the banda realtime.
+                        First(
+                            Filter(
+                                AllBandas,
+                                Reference = AddProductionBandaSelector.Selected.Result
+                            )
+                        ).AmountOfAnimals - First(
+                            Filter(
+                                AllBandas,
+                                Reference = AddProductionBandaSelector.Selected.Result
+                            )
+                        ).TotalMortality - If(
+                            IsBlank(MortalityNumericUpDown.Value),
+                            0,
+                            MortalityNumericUpDown.Value
+                        )
+                    Width: =86
+                    X: =204
+                    Y: =39
+                    ZIndex: =4
+
+                "'EggCollected label' As label":
+                    Height: =30
+                    Size: =14
+                    Text: ="Eggs collected"
+                    Width: =139
+                    X: =26
+                    Y: =113
+                    ZIndex: =5
+
+                EggsCollected_Value As label:
+                    Height: =47
+                    Size: =28
+                    Text: =Value(ProductionDataEggsProducedInput.Text) - Value(ProductionDataEggsBrokenInput.Text) -Value(ProductionDataEggsConsumedInput.Text)
+                    Width: =86
+                    X: =52
+                    Y: =39
+                    ZIndex: =6
+
+            GetDropdownDatesFunction As button:
+                Height: =36
+                OnSelect: |
+                    =Clear(colCalendar);
+                    ForAll(
+                        Sequence(
+                            14,
+                            0,
+                            -1
+                        ),
+                        Collect(
+                            colCalendar,
+                            DateAdd(
+                                Today(),
+                                Value,
+                                Days
+                            )
+                        )
+                    );
+                    ClearCollect(
+                        UniqueProd,   
+                            Filter(
+                                ChickenProduction,
+                                FarmerId = globalFarmerId,
+                                BandaReference = AddProductionBandaSelector.Selected.Result
+                            )
+                        );
+                    
+                    ClearCollect(
+                        colCalendarDates,
+                        ShowColumns(
+                                Filter(       
+                                    AddColumns(
+                                       colCalendar,
+                                      "MatchFound",
+                                      If(!IsBlank(LookUp(UniqueProd,Date=Text(colCalendar[@Value], "yyyy-mm-dd"))),true,false)
+                                 ),
+                               MatchFound=false),
+                           "Value")          
+                    );
+                Size: |
+                    =8
+                Text: ="SaveFunction"
+                Visible: =false
+                Width: =38
+                X: =264
+                Y: =145
+                ZIndex: =25
+
+            Label3_8 As label:
+                Height: =70
+                Size: =20
+                Text: ="Banda"
+                Width: =198
+                X: =63
+                Y: =35
+                ZIndex: =26
+
+            Icon1 As icon.Error:
+                Height: =49
+                Icon: =Icon.Error
+                Visible: =locShowValidation.EggsCollected && (Value(ProductionDataEggsProducedInput.Text) > 130 || (Value(ProductionDataEggsProducedInput.Text) < 80 && !IsBlank(ProductionDataEggsProducedInput.Text)))
+                Width: =49
+                X: =504
+                Y: =256
+                ZIndex: =27
+
+            Label13 As label:
+                Height: =39
+                Size: =21
+                Text: ="____________________________________"
+                Width: =344
+                X: =264
+                Y: =525
+                ZIndex: =28
+
+            Label3_5 As label:
+                Height: =70
+                Size: =20
+                Text: ="Eggs collected"
+                Width: =198
+                X: =56
+                Y: =553
+                ZIndex: =29
+
+            EggsCollected_Value_1 As label:
+                Align: =Align.Right
+                FontWeight: =FontWeight.Semibold
+                Height: =45
+                Size: =28
+                Text: =Value(ProductionDataEggsProducedInput.Text) - Value(ProductionDataEggsBrokenInput.Text) -Value(ProductionDataEggsConsumedInput.Text)
+                Width: =247
+                X: =325
+                Y: =564
+                ZIndex: =30
+
+    IconBackarrow1_12 As icon.ChevronLeft:
+        AccessibleLabel: =Self.Tooltip
+        Height: =88
+        Icon: =Icon.ChevronLeft
+        OnSelect: =Navigate(FarmerStartSceen, ScreenTransition.UnCoverRight)
+        PaddingBottom: =24
+        PaddingLeft: =24
+        PaddingRight: =24
+        PaddingTop: =24
+        TabIndex: =9
+        Tooltip: ="Terug naar lijst"
+        Width: =88
+        ZIndex: =4
+
+    IconBackarrow1_13 As icon.ChevronLeft:
+        AccessibleLabel: =Self.Tooltip
+        Height: =88
+        Icon: =Icon.Cancel
+        OnSelect: |-
+            =// Clear values.
+            Reset(ProductionDataCommentInput);
+            Reset(ProductionDataEggsConsumedInput);
+            Reset(ProductionDataEggsBrokenInput);
+            Reset(ProductionDataEggsProducedInput);
+            Reset(MortalityNumericUpDown);
+            Navigate(FarmerStartSceen, ScreenTransition.UnCoverRight)
+        PaddingBottom: =24
+        PaddingLeft: =24
+        PaddingRight: =24
+        PaddingTop: =24
+        TabIndex: =9
+        Tooltip: ="Terug naar lijst"
+        Width: =88
+        X: =552
+        ZIndex: =5
+

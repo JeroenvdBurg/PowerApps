@@ -1,0 +1,89 @@
+TabControl As CanvasComponent:
+    Color: =RGBA(0, 0, 0, 1)
+    Fill: =RGBA(0, 0, 0, 0)
+    Height: =80
+    IsVertical: =TabControl.Height > TabControl.Width
+    Items: |-
+        =   Table(    {
+                Label: "Tab1",
+                Screen: App.ActiveScreen,
+                Icon: "",
+                SelectedIcon:""
+           },
+           {
+                Label: "Tab2",
+                Screen: App.ActiveScreen,
+                Icon: "",
+                SelectedIcon:""
+           },
+           {
+                Label: "Tab3",
+                Screen: App.ActiveScreen,
+                Icon: "",
+                SelectedIcon:""
+           }
+           )
+    OnReset: =
+    Selected: =glTabControl.Selected
+    SelectedColor: =RGBA(0, 0, 0, 1)
+    Size: |
+        =18
+    Styles: |-
+        =Table({Key:"Fill", Value:"#CF6E4B"})
+    Width: =640
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    glTabControl As gallery.galleryHorizontal:
+        DisabledBorderColor: =glTabControl.BorderColor
+        DisabledFill: =glTabControl.Fill
+        Height: =TabControl.Height
+        HoverBorderColor: =glTabControl.BorderColor
+        HoverFill: =glTabControl.Fill
+        Items: =TabControl.Items
+        Layout: =If(TabControl.IsVertical, Layout.Vertical,Layout.Horizontal)
+        OnSelect: =Navigate(ThisItem.Screen,ScreenTransition.None)
+        PressedBorderColor: =glTabControl.BorderColor
+        PressedFill: =glTabControl.Fill
+        ShowScrollbar: =false
+        TemplatePadding: |
+            =1
+        TemplateSize: =207
+        Width: =601
+        X: =17
+        ZIndex: =1
+
+        HtmlText1 As htmlViewer:
+            BorderColor: =RGBA(0, 0, 0, 0.3)
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =1
+            Color: =If(ThisItem.Screen = App.ActiveScreen, TabControl.SelectedColor, TabControl.Color)
+            Fill: =RGBA(0, 0, 0, 0)
+            Font: =If(!IsBlank(LookUp(TabControl.Styles, Key = "Font").Value),LookUp(TabControl.Styles, Key = "Font").Value, Font.'Segoe UI') 
+            Height: =63
+            HoverBorderColor: =HtmlText1.BorderColor
+            HtmlText: |-
+                ="<div style='text-align:center'>" & ThisItem.Label & "</div>"
+            OnSelect: =Select(Parent)
+            PaddingBottom: =10
+            PaddingTop: =15
+            PressedBorderColor: =HtmlText1.BorderColor
+            Size: =TabControl.Size
+            Width: =179
+            Y: =5
+            ZIndex: =1
+
+        imgIcon As image:
+            FocusedBorderColor: =imgIcon.BorderColor
+            Height: =If(IsBlank(Icon),0,31)
+            HoverBorderColor: =ColorFade(imgIcon.BorderColor, 20%)
+            HoverFill: =ColorFade(imgIcon.Fill, 20%)
+            Image: =If(ThisItem.Screen = App.ActiveScreen,ThisItem.SelectedIcon, ThisItem.Icon)
+            OnSelect: =Select(Parent)
+            PressedBorderColor: =ColorFade(imgIcon.BorderColor, -20%)
+            PressedFill: =ColorFade(imgIcon.Fill, -20%)
+            Width: =If(TabControl.IsVertical,   TabControl.Height / CountRows(TabControl.Items),  TabControl.Width / CountRows(TabControl.Items))
+            Y: =4
+            ZIndex: =2
+

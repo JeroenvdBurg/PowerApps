@@ -1,0 +1,28 @@
+[
+  {
+    "ApiId": "/providers/microsoft.powerapps/apis/shared_postgresql",
+    "CdpRevision": {
+      "BaseUrl": "/",
+      "LastChangedTimeString": "2022-05-26T17:26:06.4710000Z",
+      "RevisionNumber": 1
+    },
+    "ConnectedDataSourceInfoNameMapping": {
+      "Comment": "Comment",
+      "CreatedBy": "CreatedBy",
+      "CreatedOn": "CreatedOn",
+      "Date": "Date",
+      "EggsBroken": "EggsBroken",
+      "EggsConsumed": "EggsConsumed",
+      "EggsProduced": "EggsProduced",
+      "fk_SubFlock_": "fk_SubFlock_",
+      "guid": "guid",
+      "Mortality": "Mortality"
+    },
+    "DatasetName": "default",
+    "EncodeDataset": true,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "Name": "public.ChickenProduction",
+    "Type": "ConnectedDataSourceInfo"
+  }
+]

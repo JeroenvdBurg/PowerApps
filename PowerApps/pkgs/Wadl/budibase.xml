@@ -1,0 +1,265 @@
+<application xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:service="https://europe-002.azure-apim.net/apim/budibaseapi-5f02b4db7228f31c51-5f4ba0a801deb966a1" xmlns:siena="http://schemas.microsoft.com/MicrosoftProjectSiena/WADL/2014/11" siena:serviceId="budibase" xmlns="http://wadl.dev.java.net/2009/02">
+  <doc title="budibase">budibase</doc>
+  <grammars>
+    <jsonTypes targetNamespace="https://europe-002.azure-apim.net/apim/budibaseapi-5f02b4db7228f31c51-5f4ba0a801deb966a1" xmlns="http://schemas.microsoft.com/MicrosoftProjectSiena/WADL/2014/11">
+      <string name="RetrieveARow_responses_default_def_data_def_items_def_Guid_def" />
+      <string name="RetrieveARow_responses_default_def_data_def_items_def_Date_def" />
+      <integer name="RetrieveARow_responses_default_def_data_def_items_def_EggsProduced_def" />
+      <integer name="RetrieveARow_responses_default_def_data_def_items_def_EggsBroken_def" />
+      <integer name="RetrieveARow_responses_default_def_data_def_items_def_EggsConsumed_def" />
+      <integer name="RetrieveARow_responses_default_def_data_def_items_def_Mortality_def" />
+      <string name="RetrieveARow_responses_default_def_data_def_items_def_BandaReference_def" />
+      <integer name="RetrieveARow_responses_default_def_data_def_items_def_SubFlockId_def" />
+      <integer name="RetrieveARow_responses_default_def_data_def_items_def_FarmerId_def" />
+      <string name="RetrieveARow_responses_default_def_data_def_items_def_CreatedBy_def" />
+      <string name="RetrieveARow_responses_default_def_data_def_items_def_CreatedOn_def" />
+      <object name="RetrieveARow_responses_default_def_data_def_items_def">
+        <property name="Guid" type="string" />
+        <property name="Date" type="string" />
+        <property name="EggsProduced" type="integer" />
+        <property name="EggsBroken" type="integer" />
+        <property name="EggsConsumed" type="integer" />
+        <property name="Mortality" type="integer" />
+        <property name="BandaReference" type="string" />
+        <property name="SubFlockId" type="integer" />
+        <property name="FarmerId" type="integer" />
+        <property name="CreatedBy" type="string" />
+        <property name="CreatedOn" type="string" />
+      </object>
+      <array typeRef="RetrieveARow_responses_default_def_data_def_items_def" name="RetrieveARow_responses_default_def_data_def" />
+      <object name="RetrieveARow_responses_default_def">
+        <property name="data" typeRef="RetrieveARow_responses_default_def_data_def" />
+      </object>
+      <integer name="ExecuteQuery_responses_default_def_data_def_items_def_id_def" />
+      <string name="ExecuteQuery_responses_default_def_data_def_items_def_Name_def" />
+      <string name="ExecuteQuery_responses_default_def_data_def_items_def_Second_ux20_Name_def" />
+      <string name="ExecuteQuery_responses_default_def_data_def_items_def_Phone_ux20_Number_ux20_1_def" />
+      <string name="ExecuteQuery_responses_default_def_data_def_items_def_MyOption_def" />
+      <object name="ExecuteQuery_responses_default_def_data_def_items_def">
+        <property name="id" type="integer" />
+        <property name="Name" type="string" />
+        <property name="Second Name" type="string" />
+        <property name="Phone Number 1" type="string" />
+        <property name="MyOption" type="string" />
+      </object>
+      <array typeRef="ExecuteQuery_responses_default_def_data_def_items_def" name="ExecuteQuery_responses_default_def_data_def" />
+      <object name="ExecuteQuery_responses_default_def_extra_def" />
+      <object name="ExecuteQuery_responses_default_def">
+        <property name="data" typeRef="ExecuteQuery_responses_default_def_data_def" />
+        <property name="extra" typeRef="ExecuteQuery_responses_default_def_extra_def" />
+      </object>
+      <integer name="GetLast7DaysEggsCollectedByBandaId_param_body_def_parameters_def_BandaId_def" />
+      <object name="GetLast7DaysEggsCollectedByBandaId_param_body_def_parameters_def">
+        <property name="BandaId" type="integer" />
+      </object>
+      <object name="GetLast7DaysEggsCollectedByBandaId_param_body_def">
+        <property name="parameters" typeRef="GetLast7DaysEggsCollectedByBandaId_param_body_def_parameters_def" />
+      </object>
+      <string name="GetLast7DaysEggsCollectedByBandaId_responses_default_def_data_def_items_def_date_def" />
+      <integer name="GetLast7DaysEggsCollectedByBandaId_responses_default_def_data_def_items_def_produced_def" />
+      <object name="GetLast7DaysEggsCollectedByBandaId_responses_default_def_data_def_items_def">
+        <property name="date" type="string" />
+        <property name="produced" type="integer" />
+      </object>
+      <array typeRef="GetLast7DaysEggsCollectedByBandaId_responses_default_def_data_def_items_def" name="GetLast7DaysEggsCollectedByBandaId_responses_default_def_data_def" />
+      <object name="GetLast7DaysEggsCollectedByBandaId_responses_default_def_extra_def" />
+      <object name="GetLast7DaysEggsCollectedByBandaId_responses_default_def">
+        <property name="data" typeRef="GetLast7DaysEggsCollectedByBandaId_responses_default_def_data_def" />
+        <property name="extra" typeRef="GetLast7DaysEggsCollectedByBandaId_responses_default_def_extra_def" />
+      </object>
+      <object name="GetAllTransactionDataLast7days_param_body_def" />
+      <integer name="GetAllTransactionDataLast7days_responses_default_def_data_def_items_def_FeedDelivered_def" />
+      <integer name="GetAllTransactionDataLast7days_responses_default_def_data_def_items_def_WaterDelivered_def" />
+      <integer name="GetAllTransactionDataLast7days_responses_default_def_data_def_items_def_EggsCollected_def" />
+      <integer name="GetAllTransactionDataLast7days_responses_default_def_data_def_items_def_Mortality_def" />
+      <string name="GetAllTransactionDataLast7days_responses_default_def_data_def_items_def_CreatedBy_def" />
+      <string name="GetAllTransactionDataLast7days_responses_default_def_data_def_items_def_Date_def" />
+      <integer name="GetAllTransactionDataLast7days_responses_default_def_data_def_items_def_fk_Farmer__def" />
+      <string name="GetAllTransactionDataLast7days_responses_default_def_data_def_items_def_guid_def" />
+      <string name="GetAllTransactionDataLast7days_responses_default_def_data_def_items_def_Comment_def" />
+      <object name="GetAllTransactionDataLast7days_responses_default_def_data_def_items_def">
+        <property name="FeedDelivered" type="integer" />
+        <property name="WaterDelivered" type="integer" />
+        <property name="EggsCollected" type="integer" />
+        <property name="Mortality" type="integer" />
+        <property name="CreatedBy" type="string" />
+        <property name="Date" type="string" />
+        <property name="fk_Farmer_" type="integer" />
+        <property name="guid" type="string" />
+        <property name="Comment" type="string" />
+      </object>
+      <array typeRef="GetAllTransactionDataLast7days_responses_default_def_data_def_items_def" name="GetAllTransactionDataLast7days_responses_default_def_data_def" />
+      <object name="GetAllTransactionDataLast7days_responses_default_def_extra_def" />
+      <object name="GetAllTransactionDataLast7days_responses_default_def">
+        <property name="data" typeRef="GetAllTransactionDataLast7days_responses_default_def_data_def" />
+        <property name="extra" typeRef="GetAllTransactionDataLast7days_responses_default_def_extra_def" />
+      </object>
+      <object name="GetAllProductionDataLast7Days_param_body_def_parameters_def" />
+      <object name="GetAllProductionDataLast7Days_param_body_def">
+        <property name="parameters" typeRef="GetAllProductionDataLast7Days_param_body_def_parameters_def" />
+      </object>
+      <string name="GetAllProductionDataLast7Days_responses_default_def_data_def_items_def_Guid_def" />
+      <string name="GetAllProductionDataLast7Days_responses_default_def_data_def_items_def_Date_def" />
+      <integer name="GetAllProductionDataLast7Days_responses_default_def_data_def_items_def_EggsProduced_def" />
+      <integer name="GetAllProductionDataLast7Days_responses_default_def_data_def_items_def_EggsBroken_def" />
+      <integer name="GetAllProductionDataLast7Days_responses_default_def_data_def_items_def_EggsConsumed_def" />
+      <integer name="GetAllProductionDataLast7Days_responses_default_def_data_def_items_def_Mortality_def" />
+      <string name="GetAllProductionDataLast7Days_responses_default_def_data_def_items_def_BandaReference_def" />
+      <integer name="GetAllProductionDataLast7Days_responses_default_def_data_def_items_def_SubFlockId_def" />
+      <integer name="GetAllProductionDataLast7Days_responses_default_def_data_def_items_def_FarmerId_def" />
+      <string name="GetAllProductionDataLast7Days_responses_default_def_data_def_items_def_CreatedBy_def" />
+      <string name="GetAllProductionDataLast7Days_responses_default_def_data_def_items_def_CreatedOn_def" />
+      <object name="GetAllProductionDataLast7Days_responses_default_def_data_def_items_def">
+        <property name="Guid" type="string" />
+        <property name="Date" type="string" />
+        <property name="EggsProduced" type="integer" />
+        <property name="EggsBroken" type="integer" />
+        <property name="EggsConsumed" type="integer" />
+        <property name="Mortality" type="integer" />
+        <property name="BandaReference" type="string" />
+        <property name="SubFlockId" type="integer" />
+        <property name="FarmerId" type="integer" />
+        <property name="CreatedBy" type="string" />
+        <property name="CreatedOn" type="string" />
+      </object>
+      <array typeRef="GetAllProductionDataLast7Days_responses_default_def_data_def_items_def" name="GetAllProductionDataLast7Days_responses_default_def_data_def" />
+      <object name="GetAllProductionDataLast7Days_responses_default_def">
+        <property name="data" typeRef="GetAllProductionDataLast7Days_responses_default_def_data_def" />
+      </object>
+      <object name="GetAllBandas_param_body_def" />
+      <integer name="GetAllBandas_responses_default_def_data_def_items_def_SubFlockId_def" />
+      <integer name="GetAllBandas_responses_default_def_data_def_items_def_AmountOfAnimals_def" />
+      <integer name="GetAllBandas_responses_default_def_data_def_items_def_fk_Banda_SubFlock_def" />
+      <integer name="GetAllBandas_responses_default_def_data_def_items_def_TotalMortality_def" />
+      <integer name="GetAllBandas_responses_default_def_data_def_items_def_id_def" />
+      <string name="GetAllBandas_responses_default_def_data_def_items_def_Reference_def" />
+      <string name="GetAllBandas_responses_default_def_data_def_items_def_HouseType_def" />
+      <string name="GetAllBandas_responses_default_def_data_def_items_def_PlacementDate_def" />
+      <string name="GetAllBandas_responses_default_def_data_def_items_def_ProductionSystem_def" />
+      <integer name="GetAllBandas_responses_default_def_data_def_items_def_fk_Banda_Farmer_def" />
+      <object name="GetAllBandas_responses_default_def_data_def_items_def">
+        <property name="SubFlockId" type="integer" />
+        <property name="AmountOfAnimals" type="integer" />
+        <property name="fk_Banda_SubFlock" type="integer" />
+        <property name="TotalMortality" type="integer" />
+        <property name="id" type="integer" />
+        <property name="Reference" type="string" />
+        <property name="HouseType" type="string" />
+        <property name="PlacementDate" type="string" />
+        <property name="ProductionSystem" type="string" />
+        <property name="fk_Banda_Farmer" type="integer" />
+      </object>
+      <array typeRef="GetAllBandas_responses_default_def_data_def_items_def" name="GetAllBandas_responses_default_def_data_def" />
+      <object name="GetAllBandas_responses_default_def">
+        <property name="data" typeRef="GetAllBandas_responses_default_def_data_def" />
+      </object>
+    </jsonTypes>
+  </grammars>
+  <resources siena:authenticationProviderHref="#PowerAppAuth" base="https://europe-002.azure-apim.net/apim/budibaseapi-5f02b4db7228f31c51-5f4ba0a801deb966a1">
+    <resource path="/{connectionId}/tables/{tableId}/rows/{rowId}">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="tableId" type="xs:string" required="true" fixed="datasource_plus_7ed10bb2441840fb9e7a65aafbe9bd84__farmers" />
+      <param style="template" name="rowId" type="xs:string" required="true" fixed="&quot;2&quot;" />
+      <method siena:requiresAuthentication="true" name="GET" id="RetrieveARow" actionName="RetrieveARow" siena:isDeprecated="false">
+        <doc title="Retrieve a row&#xA;Retrieve a row" />
+        <request>
+          <param style="header" name="x-budibase-app-id" type="xs:string" required="true" fixed="app_q42_8daebf92c9c64af5b1fe00f545eef1ab">
+            <doc title="x-budibase-app-id" />
+          </param>
+          <param style="header" name="Accept" type="xs:string" required="true" fixed="application/json">
+            <doc title="Accept" />
+          </param>
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:RetrieveARow_responses_default_def" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/queries/{queryId}">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="queryId" type="xs:string" required="true" fixed="query_datasource_plus_cd823013dab242a3972233b2160170cf_6621df11a71a4090b0601c530bf7937c" />
+      <method siena:requiresAuthentication="true" name="POST" id="ExecuteQuery" actionName="ExecuteQuery" siena:isDeprecated="false">
+        <doc title="executeQuery&#xA;executeQuery" />
+        <request>
+          <param style="header" name="x-budibase-app-id" type="xs:string" required="true" fixed="app_q42_8daebf92c9c64af5b1fe00f545eef1ab" />
+          <param style="header" name="Content-Type" type="xs:string" required="true" fixed="application/json" />
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:ExecuteQuery_responses_default_def" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/queries/query_datasource_plus_ace035d3870849afa90460ca2998e9ac_8bce3d4656fa4541a0fdb387ad04cde1">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="POST" id="GetLast7DaysEggsCollectedByBandaId" actionName="GetLast7DaysEggsCollectedByBandaId" siena:isDeprecated="false">
+        <doc title="Last 7 days eggs collected&#xA;Retrieve from budibase the last 7 days of eggs produced by banda id" />
+        <request>
+          <param style="header" name="Accept" type="xs:string" required="true" fixed="application/json" />
+          <param style="header" name="x-budibase-app-id" type="xs:string" required="true" fixed="app_dev_q42_6435b4608d4c44529050b3831e808b09" />
+          <param style="header" name="Content-Type" type="xs:string" required="true" fixed="application/json" />
+          <representation mediaType="application/json">
+            <param style="plain" name="parameters" path="/parameters" type="service:GetLast7DaysEggsCollectedByBandaId_param_body_def_parameters_def" />
+          </representation>
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:GetLast7DaysEggsCollectedByBandaId_responses_default_def" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/queries/query_datasource_plus_ace035d3870849afa90460ca2998e9ac_09e16a87bc934e7490d9572f2637f896">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="POST" id="GetAllTransactionDataLast7days" actionName="GetAllTransactionDataLast7days" siena:isDeprecated="false">
+        <doc title="Get All Transaction Data of Last 7 days&#xA;Retrieves all transaction data that falls within the 7 days from today." />
+        <request>
+          <param style="header" name="Accept" type="xs:string" required="true" fixed="application/json" />
+          <param style="header" name="x-budibase-app-id" type="xs:string" required="true" fixed="app_dev_q42_6435b4608d4c44529050b3831e808b09" />
+          <param style="header" name="Content-Type" type="xs:string" required="true" fixed="application/json" />
+          <representation mediaType="application/json" />
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:GetAllTransactionDataLast7days_responses_default_def" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/queries/query_datasource_plus_ace035d3870849afa90460ca2998e9ac_aa9218cf5ad44409a0b6af7823b217a0">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="POST" id="GetAllProductionDataLast7Days" actionName="GetAllProductionDataLast7Days" siena:isDeprecated="false">
+        <doc title="GetAllProductionDataLast7Days&#xA;GetAllProductionDataLast7Days" />
+        <request>
+          <param style="header" name="Accept" type="xs:string" required="true" fixed="application/json" />
+          <param style="header" name="Content-type" type="xs:string" required="true" fixed="application/json" />
+          <param style="header" name="x-budibase-app-id" type="xs:string" required="true" fixed="app_dev_q42_6435b4608d4c44529050b3831e808b09" />
+          <representation mediaType="application/json">
+            <param style="plain" name="parameters" path="/parameters" type="service:GetAllProductionDataLast7Days_param_body_def_parameters_def" />
+          </representation>
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:GetAllProductionDataLast7Days_responses_default_def" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/queries/query_datasource_plus_ace035d3870849afa90460ca2998e9ac_3e93b71567a94ea7af09f24154b3757c">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="POST" id="GetAllBandas" actionName="GetAllBandas" siena:isDeprecated="false">
+        <doc title="GetAllBandas&#xA;Retrieve all bandas" />
+        <request>
+          <param style="header" name="Content-Type" type="xs:string" required="true" fixed="application/json" />
+          <param style="header" name="Accept" type="xs:string" required="true" fixed="application/json" />
+          <param style="header" name="x-budibase-app-id" type="xs:string" required="true" fixed="app_dev_q42_6435b4608d4c44529050b3831e808b09" />
+          <representation mediaType="application/json" />
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:GetAllBandas_responses_default_def" />
+        </response>
+      </method>
+    </resource>
+  </resources>
+  <authenticationProviders xmlns="http://schemas.microsoft.com/MicrosoftProjectSiena/WADL/2014/11">
+    <connectionProvider id="PowerAppAuth" siena:connectionProviderId="shared_budibaseapi-5f02b4db7228f31c51-5f4ba0a801deb966a1" />
+  </authenticationProviders>
+  <template xmlns="http://schemas.microsoft.com/MicrosoftProjectSiena/WADL/2014/11">
+    <variable name="connectionId">
+      <modifyParams style="template" name="connectionId" attribute="fixed" />
+    </variable>
+  </template>
+</application>

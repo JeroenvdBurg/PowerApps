@@ -1,0 +1,356 @@
+"FarmerProductionData As screen.'phoneLayout_FluidGridWithHeaderPageLayout_ver3.0'":
+    OnVisible: |-
+        =// Set default all bandas value
+        Set(
+            AllBandasValue,
+            "All Bandas"
+        );
+        // Get all bandas from farmer
+        UpdateContext(
+            {
+                UniqueBandasFromFarmer: Distinct(
+                    Filter(
+                        ChickenProduction,
+                        FarmerId = globalFarmerId
+                    ),
+                    BandaReference
+                )
+            }
+        );
+        Clear(UniqueBandaList);
+        // Only add default "All bandas" option if there are more than one bandas of a farmer.
+        If(
+            CountRows(UniqueBandasFromFarmer) > 1,
+            ClearCollect(
+                UniqueBandaList,
+                Table({Result: AllBandasValue})
+            )
+        );
+        // Add all bandas from specific farmer to dropdown selection list.
+        ForAll(
+            Distinct(
+                Filter(
+                    ChickenProduction,
+                    FarmerId = globalFarmerId
+                ),
+                BandaReference
+            ),
+            Patch(
+                UniqueBandaList,
+                Defaults(UniqueBandaList),
+                {Result: ThisRecord.Result}
+            )
+        );
+        // Fill the production list
+        ClearCollect(
+            ChickenProductionForFarmer,
+            SortByColumns(
+                Filter(
+                    ChickenProduction,
+                    FarmerId = globalFarmerId
+                ),
+                "Date",
+                Descending
+            )
+        )
+
+    RectQuickActionBar2 As rectangle:
+        Fill: =PrimaryBlack
+        Height: =88
+        Width: =Parent.Width
+        ZIndex: =1
+
+    LblAppName2 As label:
+        Align: =Align.Center
+        Height: =88
+        Size: =27
+        Text: =globalFarmerFullName
+        Width: =Parent.Width
+        ZIndex: =2
+
+    Canvas3 As fluidGrid.fluidGridWithBlankCard:
+        BorderThickness: =0
+        Height: =Parent.Height - Self.Y
+        Width: =Parent.Width
+        Y: =RectQuickActionBar2.Y + RectQuickActionBar2.Height
+        ZIndex: =3
+
+        TabControlProduction As dataCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =0
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =90
+            Width: =Parent.Width
+            X: =0
+            Y: =0
+            ZIndex: =1
+
+            TabControl_1 As TabControl:
+                Height: =75
+                IsVertical: =TabControl_1.Height > TabControl_1.Width
+                Items: |-
+                    =   Table(    {
+                            Label: "New",
+                            Screen: FarmerStartSceen,
+                            Icon: "",
+                            SelectedIcon:""
+                       },
+                       {
+                            Label: "Transactions",
+                            Screen: FarmerTransactionData,
+                            Icon: "",
+                            SelectedIcon:""
+                       },
+                       {
+                            Label: "Productions",
+                            Screen: FarmerProductionData,
+                            Icon: "",
+                            SelectedIcon:""
+                       }
+                       )
+                SelectedColor: =RGBA(207, 110, 75, 1)
+                Size: =18
+                Y: =10
+
+        DataCard5 As dataCard.blankCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(241, 244, 249, 1)
+            Height: =113
+            Width: =640
+            X: =0
+            Y: =1
+            ZIndex: =2
+
+            BandaSelector_1 As dropdown:
+                BorderColor: =RGBA(207, 110, 75, 1)
+                ChevronBackground: =RGBA(207, 110, 75, 1)
+                ChevronHoverBackground: =ColorFade(RGBA(207, 110, 75, 1), -20%)
+                Default: =AllBandasValue
+                Height: =70
+                HoverFill: =RGBA(207, 110, 75, 0.5)
+                Items: =UniqueBandaList
+                OnChange: |
+                    =// Fill the production list based on the selected value
+                    If(
+                        BandaSelector_1.Selected.Result = AllBandasValue,
+                        ClearCollect(
+                            ChickenProductionForFarmer,
+                            SortByColumns(
+                                Filter(
+                                    ChickenProduction,
+                                    FarmerId = globalFarmerId
+                                ),
+                                "Date",
+                                Descending
+                            )
+                        ),
+                        ClearCollect(
+                            ChickenProductionForFarmer,
+                            SortByColumns(
+                                Filter(
+                                    ChickenProduction,
+                                    FarmerId = globalFarmerId,
+                                    BandaReference = BandaSelector_1.Selected.Result
+                                ),
+                                "Date",
+                                Descending
+                            )
+                        )
+                    );
+                PressedFill: =RGBA(207, 110, 75, 1)
+                SelectionFill: =RGBA(207, 110, 75, 1)
+                Size: =21
+                Width: =502
+                X: =27
+                Y: =15
+                ZIndex: =1
+
+        DataCard7 As dataCard.blankCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =100
+            Width: =640
+            X: =0
+            Y: =2
+            ZIndex: =3
+
+            Gallery1_2 As gallery.galleryVertical:
+                Fill: =RGBA(241, 244, 249, 1)
+                Height: =953
+                Items: =ChickenProductionForFarmer
+                Layout: =Layout.Vertical
+                TemplateSize: =182
+                ZIndex: =1
+
+                By_2 As label:
+                    Height: =35
+                    OnSelect: =Select(Parent)
+                    Size: =16
+                    Text: |-
+                        ="By:"
+                    Width: =47
+                    X: =15
+                    Y: =15
+                    ZIndex: =1
+
+                ByWho_2 As label:
+                    Height: =38
+                    OnSelect: =Select(Parent)
+                    Size: =16
+                    Text: =ThisItem.CreatedBy
+                    Width: =506
+                    X: =62
+                    Y: =12
+                    ZIndex: =2
+
+                On_2 As label:
+                    Height: =33
+                    OnSelect: =Select(Parent)
+                    Size: =16
+                    Text: |-
+                        ="Day:"
+                    Width: =93
+                    X: =15
+                    Y: =54
+                    ZIndex: =3
+
+                DateTime_2 As label:
+                    Height: =33
+                    OnSelect: =Select(Parent)
+                    Size: =16
+                    Text: =Text(DateValue(ThisItem.Date))
+                    Width: =506
+                    X: =62
+                    Y: =54
+                    ZIndex: =4
+
+                EggsIcon_3 As image:
+                    Height: =46
+                    Image: ='egg-solid'
+                    Width: =46
+                    X: =16
+                    Y: =109
+                    ZIndex: =5
+
+                EggsProducedValue As label:
+                    Height: =70
+                    OnSelect: =Select(Parent)
+                    Size: =20
+                    Text: =ThisItem.EggsProduced
+                    Width: =95
+                    X: =62
+                    Y: =97
+                    ZIndex: =6
+
+                MortalityValue_2 As label:
+                    Height: =70
+                    OnSelect: =Select(Parent)
+                    Size: =20
+                    Text: =ThisItem.Mortality
+                    Width: =70
+                    X: =209
+                    Y: =97
+                    ZIndex: =8
+
+                EggsConsumedValue As label:
+                    Height: =70
+                    OnSelect: =Select(Parent)
+                    Size: =20
+                    Text: =ThisItem.EggsConsumed
+                    Width: =79
+                    X: =360
+                    Y: =97
+                    ZIndex: =10
+
+                EggsBrokenValue As label:
+                    Height: =70
+                    OnSelect: =Select(Parent)
+                    Size: =20
+                    Text: =ThisItem.EggsBroken
+                    Width: =99
+                    X: =498
+                    Y: =97
+                    ZIndex: =12
+
+                Border_2 As rectangle:
+                    Fill: =RGBA(80, 80, 77, 1)
+                    Height: =1
+                    Width: =603
+                    X: =6
+                    Y: =181
+                    ZIndex: =14
+
+                Mortality_2 As image:
+                    Height: =46
+                    Image: ='image (3)'
+                    Width: =46
+                    X: =160
+                    Y: =109
+                    ZIndex: =15
+
+                Mortality_3 As image:
+                    Height: =64
+                    Image: ='eat-egg'
+                    Width: =64
+                    X: =291
+                    Y: =96
+                    ZIndex: =16
+
+                Mortality_4 As image:
+                    Height: =46
+                    Image: ='broken-egg'
+                    Width: =46
+                    X: =446
+                    Y: =109
+                    ZIndex: =17
+
+                Mortality_5 As image:
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    DisplayMode: =DisplayMode.View
+                    Height: =54
+                    Image: =If(ThisItem.NeedsSync = 0, Eo_circle_green_checkmark, autorenew)
+                    Width: =39
+                    X: =556
+                    Y: =15
+                    ZIndex: =18
+
+    IconBackarrow1_11 As icon.ChevronLeft:
+        AccessibleLabel: =Self.Tooltip
+        Height: =88
+        Icon: =Icon.ChevronLeft
+        OnSelect: =Navigate(Farmers, ScreenTransition.UnCoverRight)
+        PaddingBottom: =24
+        PaddingLeft: =24
+        PaddingRight: =24
+        PaddingTop: =24
+        TabIndex: =0
+        Tooltip: ="Terug naar lijst"
+        Width: =88
+        ZIndex: =4
+
+    Icon1_2 As icon.RadarActivityMonitor:
+        Color: =RGBA(0, 0, 0, 1)
+        Height: =65
+        Icon: =Icon.Trending
+        OnSelect: |-
+            =Navigate(FarmerPerformance, ScreenTransition.Cover, {farmerId: globalFarmerId});
+        Width: =41
+        X: =561
+        Y: =198
+        ZIndex: =5
+
+    Icon7 As icon.Add:
+        Color: =RGBA(255, 255, 255, 1)
+        Icon: =Icon.Add
+        OnSelect: |-
+            =Navigate(AddNewProduction, ScreenTransition.Cover, {farmerId: globalFarmerId});
+        X: =549
+        Y: =12
+        ZIndex: =6
+

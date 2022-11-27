@@ -1,0 +1,545 @@
+"Home As screen.'phoneBrowseLayout_ver3.0'":
+    Fill: |+
+        =
+        
+
+    Image1 As image:
+        Height: =210
+        Image: ='ECA LOGO 2022'
+        Width: =320
+        X: =182
+        Y: =856
+        ZIndex: =17
+
+    CompanyBrand_1 As CompanyBrand:
+        Fill: =RGBA(80, 80, 77, 1)
+        HeaderImage: =User().Image
+        LinkToMeScreen: =MeScreen
+        Title: ="ECA Data app"
+        X: =0
+        Y: =0
+        ZIndex: =19
+
+    OfflineDataSyncInfoLabel As label:
+        Color: =RGBA(0, 0, 0, 0.6)
+        Height: =38
+        Size: =20
+        Text: |-
+            =If(
+                CountRows(
+                    Filter(
+                        ChickenTransactions,
+                        NeedsSync = 1
+                    )
+                ) > 0 || CountRows(
+                    Filter(
+                        ChickenProduction,
+                        NeedsSync = 1
+                    )
+                ) > 0,
+                Concatenate(
+                    CountRows(
+                        Filter(
+                            ChickenTransactions,
+                            NeedsSync = 1
+                        )
+                    ) + CountRows(
+                        Filter(
+                            ChickenProduction,
+                            NeedsSync = 1
+                        )
+                    ),
+                    " pending data points"
+                ),
+                ""
+            )
+        Width: =500
+        X: =70
+        Y: =562
+        ZIndex: =20
+
+    VersionNumber As label:
+        Height: =70
+        Size: =10
+        Text: |-
+            ="version : 0.5.0"
+        Width: =203
+        X: =5
+        Y: =1066
+        ZIndex: =22
+
+    SelectFarmerGroup As group:
+        Height: =5
+        Width: =5
+        X: =20
+        Y: =18
+        ZIndex: =28
+
+        SelectFarmerButton As button:
+            Fill: =RGBA(207, 110, 75, 1)
+            Height: =100
+            HoverBorderColor: =ColorFade(Self.Fill, 20%)
+            HoverFill: =ColorFade(Self.Fill, -20%)
+            OnSelect: =Navigate(Farmers, ScreenTransition.Fade)
+            PaddingRight: =
+            Size: =24
+            Text: ="Select Farmer"
+            Width: =500
+            X: =70
+            Y: =233
+            ZIndex: =26
+
+        SelectFarmerIcon As icon.Add:
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =46
+            Icon: =Icon.LogJournal
+            OnSelect: =Navigate(Farmers, ScreenTransition.Fade)
+            Width: =49
+            X: =92
+            Y: =260
+            ZIndex: =27
+
+    SyncGroup As group:
+        Height: =5
+        Width: =5
+        X: =20
+        Y: =20
+        ZIndex: =30
+
+        GroupSyncButton As button:
+            DisplayMode: =If(Connection.Connected && Not(OfflineMode), DisplayMode.Edit, DisplayMode.Disabled)
+            Fill: =RGBA(207, 110, 75, 1)
+            Height: =100
+            HoverBorderColor: =ColorFade(Self.Fill, 20%)
+            HoverFill: =ColorFade(Self.Fill, -20%)
+            OnSelect: |-
+                =// Sync local data to online.
+                // Sync chickentransactions
+                IfError( 
+                     ForAll(
+                        Filter(
+                            ChickenTransactions,
+                            NeedsSync = 1
+                        ),
+                        Patch(
+                            'public.ChickenTransaction',
+                            Defaults('public.ChickenTransaction'),
+                            {
+                                guid: ThisRecord.guid,
+                                EggsCollected: ThisRecord.EggsCollected,
+                                FeedDelivered: ThisRecord.FeedDelivered,
+                                WaterDelivered: ThisRecord.WaterDelivered,
+                                Mortality: ThisRecord.Mortality,
+                                Comment: ThisRecord.Comment,
+                                fk_Farmer_: ThisRecord.fk_Farmer_,
+                                CreatedBy: User().Email,
+                                Date: DateAdd(
+                                    ThisRecord.UTCDate,
+                                    -TimeZoneOffset(),
+                                    Minutes
+                                )
+                            }
+                        );
+                        If(
+                        // check if there were any errors when the transaction was submitted
+                            IsEmpty(Errors('public.ChickenTransaction')),
+                            Patch(
+                                ChickenTransactions,
+                                ThisRecord,
+                                {NeedsSync: 0}
+                            );
+                        )
+                    );
+                    SaveData(
+                        ChickenTransactions,
+                        "ChickenTransactions"
+                    );
+                    Notify(
+                        "Synced transaction data successfully.",
+                        NotificationType.Success
+                    ),
+                   Notify(
+                        "Sync has failed, check your connection and try again",
+                        NotificationType.Error
+                    )
+                );
+                // Chickenproduction sync
+                IfError(   
+                    ForAll(
+                        Filter(
+                            ChickenProduction,
+                            NeedsSync = 1
+                        ),
+                        Patch(
+                            'public.ChickenProduction',
+                            Defaults('public.ChickenProduction'),
+                            {
+                                guid: ThisRecord.Guid,
+                                Comment: ThisRecord.Comment,
+                                Date: DateTimeValue(ThisRecord.Date),
+                                EggsProduced: ThisRecord.EggsProduced,
+                                EggsConsumed: ThisRecord.EggsConsumed,
+                                EggsBroken: ThisRecord.EggsBroken,
+                                Mortality: ThisRecord.Mortality,
+                                fk_SubFlock_: ThisRecord.SubFlockId,
+                                CreatedOn: DateAdd(DateTimeValue(ThisRecord.CreatedOn), -TimeZoneOffset(), Minutes), //default UTC time save, now local time
+                                CreatedBy: ThisRecord.CreatedBy
+                            }
+                        );
+                        If(
+                        // check if there were any errors when the production was submitted
+                            IsEmpty(Errors('public.ChickenProduction')),
+                            Patch(
+                                ChickenProduction,
+                                ThisRecord,
+                                {NeedsSync: 0}
+                            );
+                        )
+                    );
+                    SaveData(
+                        ChickenProduction,
+                        "ChickenProduction"
+                    );
+                    Notify(
+                        "Synced local data successfully.",
+                        NotificationType.Success
+                    ),
+                    Notify(
+                        "Sync has failed, check your connection and try again",
+                        NotificationType.Error
+                    )
+                );
+                
+                // Sync all online data to local store
+                // Force sync load all data and store them locally
+                IfError(
+                    If(
+                        Connection.Connected && Not(OfflineMode) && CountRows(
+                            Filter(
+                                ChickenTransactions,
+                                NeedsSync = 1
+                            )
+                        ) = 0 && CountRows(
+                            Filter(
+                                ChickenProduction,
+                                NeedsSync = 1
+                            )
+                        ) = 0,
+                        Concurrent(
+                            ClearCollect(
+                                AllFarmers,
+                                Filter(
+                                    'public.Farmer',
+                                    Status = "Selected"
+                                )
+                            ),
+                            ClearCollect(
+                                AllBandas,
+                                budibase.GetAllBandas().data
+                            );
+                            ClearCollect(
+                                ChickenTransactions,
+                                AddColumns(
+                                    budibase.GetAllTransactionDataLast7days().data,
+                                    "NeedsSync",
+                                    0,
+                                    "UTCDate",
+                                    DateAdd(
+                                        DateTimeValue(ThisRecord.Date),
+                                        TimeZoneOffset(),
+                                        Minutes
+                                    )
+                                )
+                            ),
+                            ClearCollect(
+                                ChickenProduction,
+                                AddColumns(
+                                    budibase.GetAllProductionDataLast7Days().data,
+                                    "NeedsSync",
+                                    0
+                                )
+                            )
+                        );
+                        // After concurrently force loading the data we want to update the lastSyncedDate
+                ClearCollect(
+                            LastSyncedCollection,
+                            Now()
+                        );
+                        // Force save data in cache
+                SaveData(
+                            LastSyncedCollection,
+                            "LastSyncedCollection"
+                        );
+                        SaveData(
+                            AllFarmers,
+                            "Farmers"
+                        );
+                        SaveData(
+                            AllBandas,
+                            "Bandas"
+                        );
+                        SaveData(
+                            ChickenTransactions,
+                            "ChickenTransactions"
+                        );
+                        SaveData(
+                            ChickenProduction,
+                            "ChickenProduction"
+                        );
+                        LoadData(
+                            LastSyncedCollection,
+                            "LastSyncedCollection",
+                            true
+                        );
+                        Set(
+                            LastSyncedDate,
+                            First(LastSyncedCollection).Value
+                        );
+                        Notify(
+                            "Synced data from online successfully.",
+                            NotificationType.Success
+                        );
+                    );
+                    ,
+                    Notify(
+                        "Sync from online has failed, check your connection and try again",
+                        NotificationType.Error
+                    )
+                )
+            PaddingRight: =
+            Size: =24
+            Text: ="Sync data"
+            Width: =500
+            X: =70
+            Y: =395
+            ZIndex: =28
+
+        SyncIcon As icon.Add:
+            Color: =RGBA(255, 255, 255, 1)
+            DisplayMode: =If(Connection.Connected && Not(OfflineMode), DisplayMode.Edit, DisplayMode.Disabled)
+            Height: =46
+            Icon: =Icon.Sync
+            OnSelect: |-
+                =// Sync local data to online.
+                // Sync chickentransactions
+                IfError( 
+                     ForAll(
+                        Filter(
+                            ChickenTransactions,
+                            NeedsSync = 1
+                        ),
+                        Patch(
+                            'public.ChickenTransaction',
+                            Defaults('public.ChickenTransaction'),
+                            {
+                                guid: ThisRecord.guid,
+                                EggsCollected: ThisRecord.EggsCollected,
+                                FeedDelivered: ThisRecord.FeedDelivered,
+                                WaterDelivered: ThisRecord.WaterDelivered,
+                                Mortality: ThisRecord.Mortality,
+                                Comment: ThisRecord.Comment,
+                                fk_Farmer_: ThisRecord.fk_Farmer_,
+                                CreatedBy: User().Email,
+                                Date: DateAdd(
+                                    ThisRecord.UTCDate,
+                                    -TimeZoneOffset(),
+                                    Minutes
+                                )
+                            }
+                        );
+                        If(
+                        // check if there were any errors when the transaction was submitted
+                            IsEmpty(Errors('public.ChickenTransaction')),
+                            Patch(
+                                ChickenTransactions,
+                                ThisRecord,
+                                {NeedsSync: 0}
+                            );
+                        )
+                    );
+                    SaveData(
+                        ChickenTransactions,
+                        "ChickenTransactions"
+                    );
+                    Notify(
+                        "Synced transaction data successfully.",
+                        NotificationType.Success
+                    ),
+                   Notify(
+                        "Sync has failed, check your connection and try again",
+                        NotificationType.Error
+                    )
+                );
+                // Chickenproduction sync
+                IfError(   
+                    ForAll(
+                        Filter(
+                            ChickenProduction,
+                            NeedsSync = 1
+                        ),
+                        Patch(
+                            'public.ChickenProduction',
+                            Defaults('public.ChickenProduction'),
+                            {
+                                guid: ThisRecord.Guid,
+                                Comment: ThisRecord.Comment,
+                                Date: DateTimeValue(ThisRecord.Date),
+                                EggsProduced: ThisRecord.EggsProduced,
+                                EggsConsumed: ThisRecord.EggsConsumed,
+                                EggsBroken: ThisRecord.EggsBroken,
+                                Mortality: ThisRecord.Mortality,
+                                fk_SubFlock_: ThisRecord.SubFlockId,
+                                CreatedOn: DateAdd(DateTimeValue(ThisRecord.CreatedOn), -TimeZoneOffset(), Minutes), //default UTC time save, now local time
+                                CreatedBy: ThisRecord.CreatedBy
+                            }
+                        );
+                        If(
+                        // check if there were any errors when the production was submitted
+                            IsEmpty(Errors('public.ChickenProduction')),
+                            Patch(
+                                ChickenProduction,
+                                ThisRecord,
+                                {NeedsSync: 0}
+                            );
+                        )
+                    );
+                    SaveData(
+                        ChickenProduction,
+                        "ChickenProduction"
+                    );
+                    Notify(
+                        "Synced local data successfully.",
+                        NotificationType.Success
+                    ),
+                    Notify(
+                        "Sync has failed, check your connection and try again",
+                        NotificationType.Error
+                    )
+                );
+                
+                // Sync all online data to local store
+                // Force sync load all data and store them locally
+                IfError(
+                    If(
+                        Connection.Connected && Not(OfflineMode) && CountRows(
+                            Filter(
+                                ChickenTransactions,
+                                NeedsSync = 1
+                            )
+                        ) = 0 && CountRows(
+                            Filter(
+                                ChickenProduction,
+                                NeedsSync = 1
+                            )
+                        ) = 0,
+                        Concurrent(
+                            ClearCollect(
+                                AllFarmers,
+                                Filter(
+                                    'public.Farmer',
+                                    Status = "Selected" Or Status = "On-boarded"
+                                )
+                            ),
+                            ClearCollect(
+                                AllBandas,
+                                budibase.GetAllBandas().data
+                            );
+                            ClearCollect(
+                                ChickenTransactions,
+                                AddColumns(
+                                    budibase.GetAllTransactionDataLast7days().data,
+                                    "NeedsSync",
+                                    0,
+                                    "UTCDate",
+                                    DateAdd(
+                                        DateTimeValue(ThisRecord.Date),
+                                        TimeZoneOffset(),
+                                        Minutes
+                                    )
+                                )
+                            ),
+                            ClearCollect(
+                                ChickenProduction,
+                                AddColumns(
+                                    budibase.GetAllProductionDataLast7Days().data,
+                                    "NeedsSync",
+                                    0
+                                )
+                            )
+                        );
+                        // After concurrently force loading the data we want to update the lastSyncedDate
+                ClearCollect(
+                            LastSyncedCollection,
+                            Now()
+                        );
+                        // Force save data in cache
+                SaveData(
+                            LastSyncedCollection,
+                            "LastSyncedCollection"
+                        );
+                        SaveData(
+                            AllFarmers,
+                            "Farmers"
+                        );
+                        SaveData(
+                            AllBandas,
+                            "Bandas"
+                        );
+                        SaveData(
+                            ChickenTransactions,
+                            "ChickenTransactions"
+                        );
+                        SaveData(
+                            ChickenProduction,
+                            "ChickenProduction"
+                        );
+                        LoadData(
+                            LastSyncedCollection,
+                            "LastSyncedCollection",
+                            true
+                        );
+                        Set(
+                            LastSyncedDate,
+                            First(LastSyncedCollection).Value
+                        );
+                        Notify(
+                            "Synced data from online successfully.",
+                            NotificationType.Success
+                        );
+                    );
+                    ,
+                    Notify(
+                        "Sync from online has failed, check your connection and try again",
+                        NotificationType.Error
+                    )
+                )
+            Width: =49
+            X: =92
+            Y: =422
+            ZIndex: =29
+
+    Label9 As label:
+        Color: =RGBA(128, 128, 128, 1)
+        Height: =70
+        Size: =20
+        Text: |-
+            ="Last synced: " & Text(LastSyncedDate)
+        Width: =500
+        X: =70
+        Y: =495
+        ZIndex: =31
+
+    Button1 As button:
+        Height: =70
+        OnSelect: |-
+            =ClearCollect(Test123, Filter(
+                                'public.Farmer',
+                                Status = "On-boarded" Or Status = "Selected"
+                            ));
+        Size: =24
+        Text: ="Button"
+        Width: =280
+        X: =79
+        Y: =138
+        ZIndex: =32
+

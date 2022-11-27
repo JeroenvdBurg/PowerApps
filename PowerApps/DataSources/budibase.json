@@ -1,0 +1,8 @@
+[
+  {
+    "ApiId": "/providers/microsoft.powerapps/apis/shared_budibaseapi-5f02b4db7228f31c51-5f4ba0a801deb966a1",
+    "Name": "budibase",
+    "ServiceKind": "ConnectedWadl",
+    "Type": "ServiceInfo"
+  }
+]

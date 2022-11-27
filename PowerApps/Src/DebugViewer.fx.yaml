@@ -1,0 +1,670 @@
+"DebugViewer As screen.'phoneLayout_FluidGridWithHeaderPageLayout_ver3.0'":
+
+    RectQuickActionBar1 As rectangle:
+        Fill: =RGBA(80, 80, 77, 1)
+        Height: =113.6
+        Width: =Parent.Width
+        ZIndex: =1
+
+    LblAppName1 As label:
+        Align: =Align.Center
+        FontWeight: =FontWeight.Bold
+        Height: =113.6
+        Size: =27
+        Text: ="Debug view"
+        Width: =Parent.Width
+        ZIndex: =2
+
+    Canvas2 As fluidGrid.fluidGridWithBlankCard:
+        BorderThickness: =0
+        Height: =1021
+        Width: =Parent.Width
+        Y: =113
+        ZIndex: =3
+
+        DataCard1 As dataCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =0
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =343
+            Width: =Parent.Width
+            X: =0
+            Y: =0
+            ZIndex: =1
+
+            Label6_4 As label:
+                Height: =53
+                Size: =21
+                Text: ="Settings"
+                Width: =560
+                X: =40
+                Y: =10
+                ZIndex: =1
+
+            Toggle1 As toggleSwitch:
+                Default: =OfflineMode
+                FalseText: ="Simulate offline"
+                Height: =49
+                OnCheck: =Set(OfflineMode, true)
+                OnUncheck: =Set(OfflineMode, false)
+                Size: =21
+                TrueText: ="Simulate offline"
+                Width: =312
+                X: =40
+                Y: =83
+                ZIndex: =2
+
+            Toggle2 As toggleSwitch:
+                Default: =ForceTransactionLoading
+                FalseText: ="Force transaction loading"
+                Height: =50
+                OnCheck: =Set(ForceTransactionLoading, true)
+                OnUncheck: =Set(ForceTransactionLoading, false)
+                Size: =21
+                TrueText: ="Force transaction loading"
+                Width: =438
+                X: =40
+                Y: =145
+                ZIndex: =3
+
+            Button5 As button:
+                Height: =70
+                OnSelect: |-
+                    =Clear(ChickenProduction);
+                    SaveData(
+                        ChickenProduction,
+                        "ChickenProduction"
+                    );
+                    Clear(ChickenTransactions);
+                    SaveData(
+                        ChickenTransactions,
+                        "ChickenTransactions"
+                    )
+                Size: =24
+                Text: ="Clear chicken collections"
+                Width: =478
+                X: =40
+                Y: =214
+                ZIndex: =4
+
+        DataCard2 As dataCard.blankCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =100
+            Width: =640
+            X: =0
+            Y: =1
+            ZIndex: =2
+
+            Label1 As label:
+                Height: =70
+                Size: =21
+                Text: ="Chickentransactions"
+                Width: =560
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataTable2 As dataTable.datatable:
+                BorderStyle: =BorderStyle.Solid
+                DisplayMode: =DisplayMode.Edit
+                Fill: =RGBA(0, 0, 0, 0)
+                HeadingSize: =21
+                Height: =448
+                Items: =ChickenTransactions
+                Size: =21
+                Width: =640
+                X: =0
+                Y: =80
+                ZIndex: =2
+
+                EggsCollected_Column2 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="EggsCollected"
+                    FieldName: ="EggsCollected"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =10
+                    Text: =ThisItem.EggsCollected
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =13
+
+                FeedDelivered_Column2 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="FeedDelivered"
+                    FieldName: ="FeedDelivered"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =11
+                    Text: =ThisItem.FeedDelivered
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =14
+
+                WaterDelivered_Column2 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="WaterDelivered"
+                    FieldName: ="WaterDelivered"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =13
+                    Text: =ThisItem.WaterDelivered
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =16
+
+                guid_Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="guid"
+                    FieldName: ="guid"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =4
+                    Text: =ThisItem.guid
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =18
+
+                CreatedBy_Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="CreatedBy"
+                    FieldName: ="CreatedBy"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =9
+                    Text: =ThisItem.CreatedBy
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =19
+
+                Date_Column2 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="Date"
+                    FieldName: ="Date"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =18
+                    Text: =ThisItem.Date
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =20
+
+                fk_Farmer__Column2 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="fk_Farmer_"
+                    FieldName: ="fk_Farmer_"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =16
+                    Text: =ThisItem.fk_Farmer_
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =24
+
+                NeedsSync_Column2 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="NeedsSync"
+                    FieldName: ="NeedsSync"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =17
+                    Text: =ThisItem.NeedsSync
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =25
+
+                Comment_Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="Comment"
+                    FieldName: ="Comment"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =15
+                    Text: =ThisItem.Comment
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =29
+
+                UTCDate_Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="UTCDate"
+                    FieldName: ="UTCDate"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =7
+                    Text: =ThisItem.UTCDate
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =30
+
+                ChickenDelta_Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="Mortality"
+                    FieldName: ="ChickenDelta"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =14
+                    Text: =ThisItem.Mortality
+                    Width: =100
+                    X: =480
+                    Y: =0
+                    ZIndex: =31
+
+        DataCard3 As dataCard.blankCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =100
+            Width: =640
+            X: =0
+            Y: =2
+            ZIndex: =3
+
+            Label6_1 As label:
+                Height: =70
+                Size: =21
+                Text: ="Chickentransactions (offline only)"
+                Width: =560
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataTable1_1 As dataTable.datatable:
+                BorderStyle: =BorderStyle.Solid
+                DisplayMode: =DisplayMode.Edit
+                Fill: =RGBA(0, 0, 0, 0)
+                HeadingSize: =21
+                Height: =445
+                Items: =Filter(ChickenTransactions, NeedsSync = 1)
+                Size: =21
+                Width: =640
+                X: =0
+                Y: =78
+                ZIndex: =2
+
+                guid_Column1_1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="guid"
+                    FieldName: ="guid"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =1
+                    Text: =ThisItem.guid
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =3
+
+                CreatedBy_Column1_1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="CreatedBy"
+                    FieldName: ="CreatedBy"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =7
+                    Text: =ThisItem.CreatedBy
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =5
+
+                EggsCollected_Column1_1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="EggsCollected"
+                    FieldName: ="EggsCollected"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =8
+                    Text: =ThisItem.EggsCollected
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =6
+
+                FeedDelivered_Column1_1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="FeedDelivered"
+                    FieldName: ="FeedDelivered"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =10
+                    Text: =ThisItem.FeedDelivered
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =7
+
+                WaterDelivered_Column1_1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="WaterDelivered"
+                    FieldName: ="WaterDelivered"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =11
+                    Text: =ThisItem.WaterDelivered
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =9
+
+                fk_Farmer__Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="fk_Farmer_"
+                    FieldName: ="fk_Farmer_"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =14
+                    Text: =ThisItem.fk_Farmer_
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =22
+
+                NeedsSync_Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="NeedsSync"
+                    FieldName: ="NeedsSync"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =15
+                    Text: =ThisItem.NeedsSync
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =23
+
+                ChickenDelta_Column2 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="Mortality"
+                    FieldName: ="ChickenDelta"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =12
+                    Text: =ThisItem.Mortality
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =32
+
+                Comment_Column2 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="Comment"
+                    FieldName: ="Comment"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =13
+                    Text: =ThisItem.Comment
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =33
+
+                UTCDate_Column2 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="UTCDate"
+                    FieldName: ="UTCDate"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =4
+                    Text: =ThisItem.UTCDate
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =34
+
+        DataCard4 As dataCard.blankCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =100
+            Width: =640
+            X: =0
+            Y: =3
+            ZIndex: =4
+
+            DataTable1 As dataTable.datatable:
+                BorderStyle: =BorderStyle.Solid
+                DisplayMode: =DisplayMode.Edit
+                Fill: =RGBA(0, 0, 0, 0)
+                HeadingSize: =21
+                Height: =447
+                Items: =ChickenProduction
+                Size: =21
+                Width: =640
+                X: =0
+                Y: =90
+                ZIndex: =1
+
+                Guid_Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="Guid"
+                    FieldName: ="Guid"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =1
+                    Text: =ThisItem.Guid
+                    Width: =100
+                    X: =27
+                    Y: =0
+                    ZIndex: =35
+
+                CreatedBy_Column2 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="CreatedBy"
+                    FieldName: ="CreatedBy"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =3
+                    Text: =ThisItem.CreatedBy
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =37
+
+                CreatedOn_Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="CreatedOn"
+                    FieldName: ="CreatedOn"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =4
+                    Text: =ThisItem.CreatedOn
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =38
+
+                Date_Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="Date"
+                    FieldName: ="Date"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =5
+                    Text: =ThisItem.Date
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =39
+
+                BandaReference_Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="BandaReference"
+                    FieldName: ="BandaReference"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =6
+                    Text: =ThisItem.BandaReference
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =40
+
+                FarmerId_Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="FarmerId"
+                    FieldName: ="FarmerId"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =7
+                    Text: =ThisItem.FarmerId
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =41
+
+                EggsProduced_Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="EggsProduced"
+                    FieldName: ="EggsProduced"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =8
+                    Text: =ThisItem.EggsProduced
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =42
+
+                EggsConsumed_Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="EggsConsumed"
+                    FieldName: ="EggsConsumed"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =9
+                    Text: =ThisItem.EggsConsumed
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =43
+
+                EggsBroken_Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="EggsBroken"
+                    FieldName: ="EggsBroken"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =10
+                    Text: =ThisItem.EggsBroken
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =44
+
+                Mortality_Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="Mortality"
+                    FieldName: ="Mortality"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =11
+                    Text: =ThisItem.Mortality
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =45
+
+                SubFlockId_Column1 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="SubFlockId"
+                    FieldName: ="SubFlockId"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =12
+                    Text: =ThisItem.SubFlockId
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =46
+
+                NeedsSync_Column3 As dataTableColumn.textualColumn:
+                    DisplayMode: =DisplayMode.Edit
+                    FieldDisplayName: ="NeedsSync"
+                    FieldName: ="NeedsSync"
+                    FieldVariantName: ="textualColumn"
+                    Height: =Parent.Height
+                    LayoutHeight: =Parent.Height
+                    Order: =13
+                    Text: =ThisItem.NeedsSync
+                    Width: =100
+                    X: =0
+                    Y: =0
+                    ZIndex: =47
+
+            Label12 As label:
+                Height: =70
+                Size: =21
+                Text: ="ChickenProductions"
+                Width: =560
+                X: =27
+                Y: =20
+                ZIndex: =2
+
+    Me_Back_Icon_2 As icon.ArrowLeft:
+        Color: =RGBA(255, 255, 255, 1)
+        DisabledFill: =Me_Back_Icon_2.Fill
+        FocusedBorderColor: =Me_Back_Icon_2.BorderColor
+        Height: =49
+        HoverBorderColor: =ColorFade(Me_Back_Icon_2.BorderColor, 20%)
+        HoverColor: =ColorFade(Me_Back_Icon_2.Color, 20%)
+        HoverFill: =Me_Back_Icon_2.Fill
+        Icon: =Icon.ArrowLeft
+        OnSelect: =Back()
+        PressedBorderColor: =ColorFade(Me_Back_Icon_2.BorderColor, -20%)
+        PressedColor: =ColorFade(Me_Back_Icon_2.Color, -20%)
+        PressedFill: =Me_Back_Icon_2.Fill
+        Width: =50
+        X: =40
+        Y: =31
+        ZIndex: =4
+

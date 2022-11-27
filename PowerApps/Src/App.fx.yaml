@@ -1,0 +1,143 @@
+App As appinfo:
+    BackEnabled: =true
+    ConfirmExit: =true
+    ConfirmExitMessage: ="Are you sure you want to exit the ECA data app?"
+    OnError: =
+    OnStart: |-
+        =// Set default debug settings
+        Set(
+            OfflineMode,
+            false
+        );
+        
+        // Set default colors
+        Set(PrimaryBlack, RGBA(80, 80, 77, 1));
+        Set(PrimaryAction, RGBA(207, 110, 75, 1));
+        
+        // Concurrently load data to local storage if online
+        If(
+            Connection.Connected && Not(OfflineMode),
+            Concurrent(
+                If(
+                    IsEmpty(AllFarmers),
+                    ClearCollect(
+                        AllFarmers,
+                        Filter(
+                            'public.Farmer',
+                            Status = "Selected" Or Status = "On-boarded"
+                        )
+                    )
+                ),
+                ClearCollect(AllBandas, AddColumns(budibase.GetAllBandas().data,"CurrentBirds", AmountOfAnimals - TotalMortality));
+        
+                //Load ChickenTransaction from cache if empty (for example when app has been restarted)
+                If(IsEmpty(ChickenTransactions), LoadData(ChickenTransactions, "ChickenTransactions", true));
+               // If a collecter hasn't synced their local data yet, we shouldn't force update
+                  If(
+                    CountRows(
+                        Filter(
+                            ChickenTransactions,
+                            NeedsSync = 1
+                        )
+                    ) = 0,
+                    ClearCollect(
+                        ChickenTransactions,
+                        AddColumns(
+                            budibase.GetAllTransactionDataLast7days().data,
+                            "NeedsSync",
+                            0,
+                            "UTCDate",
+                            DateAdd(DateTimeValue(ThisRecord.Date), TimeZoneOffset(), Minutes))
+                        )
+                    ),
+        
+                //Load ChickenProduction from cache if empty (for example when app has been restarted)
+                If(IsEmpty(ChickenProduction), LoadData(ChickenProduction, "ChickenProduction", true));
+        
+                // If a collecter hasn't synced their local data yet, we shouldn't force update
+                  If(
+                    CountRows(
+                        Filter(
+                            ChickenProduction,
+                            NeedsSync = 1
+                        )
+                    ) = 0,
+                    ClearCollect(
+                        ChickenProduction,
+                        AddColumns(
+                            budibase.GetAllProductionDataLast7Days().data,
+                            "NeedsSync",
+                            0)                  
+                        )
+                    );
+                );
+        
+                // After everything has been loaded concurrently we set the initial sync data if none has been set already.
+                If(IsEmpty(LastSyncedCollection), LoadData(LastSyncedCollection,"LastSyncedCollection",true));
+                If(
+                    IsEmpty(LastSyncedCollection),
+                    ClearCollect(
+                        LastSyncedCollection,
+                        Now()
+                    );
+                    SaveData(LastSyncedCollection,"LastSyncedCollection");
+                );   
+        );
+        // Load LastSynced date
+        LoadData(LastSyncedCollection, "LastSyncedCollection", true);
+        Set(LastSyncedDate, First(LastSyncedCollection).Value);
+        
+        // Load or store data into local storage
+        If(
+            IsEmpty(AllFarmers),
+            LoadData(
+                AllFarmers,
+                "Farmers",
+                true
+            ),
+            SaveData(
+                AllFarmers,
+                "Farmers"
+            );
+            
+        );
+        //Bandas
+        If(
+            IsEmpty(AllBandas),
+            LoadData(
+                AllBandas,
+                "Bandas",
+                true
+            ),
+            SaveData(
+                AllBandas,
+                "Bandas"
+            );
+            
+        );
+        If(
+            IsEmpty(ChickenTransactions) || ForceTransactionLoading,
+            LoadData(
+                ChickenTransactions,
+                "ChickenTransactions",
+                true
+            ),
+            SaveData(
+                ChickenTransactions,
+                "ChickenTransactions"
+            )
+        );
+        If(
+            IsEmpty(ChickenProduction) || ForceTransactionLoading,
+            LoadData(
+                ChickenProduction,
+                "ChickenProduction",
+                true
+            ),
+            SaveData(
+                ChickenProduction,
+                "ChickenProduction"
+            )
+        )
+    StartScreen: =
+

@@ -1,0 +1,52 @@
+"AfterSignoffSuccessScreen As screen.'phoneLayout_Success_ver3.0'":
+    Fill: =RGBA(47, 191, 42, 1)
+
+    iconCircle1 As circle.Circle:
+        Fill: =RGBA(47, 191, 42, 1)
+        X: =Parent.Width/2 - Self.Width/2
+        Y: =(Parent.Height/2 - Self.Height/2) * .7
+        ZIndex: =1
+
+    iconCheck1 As icon.Check:
+        Height: =295
+        Icon: =Icon.EmojiSmile
+        PaddingBottom: =Self.PaddingTop
+        PaddingLeft: =Self.PaddingTop
+        PaddingRight: =Self.PaddingTop
+        PaddingTop: =18
+        Width: =295
+        X: =Parent.Width/2 - Self.Width/2
+        Y: =(Parent.Height/2 - Self.Height/2) * .7
+        ZIndex: =2
+
+    LblSuccessMsg1 As label:
+        Align: =Align.Center
+        AutoHeight: =true
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =iconCircle1.Height
+        Size: =50
+        Text: ="Asante sana!"
+        Width: =Parent.Width * 0.75
+        X: =Parent.Width/2 - Self.Width/2
+        Y: =iconCheck1.Y + iconCheck1.Height + 100
+        ZIndex: =3
+
+    IconBackarrow1_3 As icon.ChevronLeft:
+        AccessibleLabel: =Self.Tooltip
+        Height: =88
+        Icon: =Icon.ChevronRight
+        OnSelect: |-
+            =Navigate(
+                    FarmerStartSceen,
+                    ScreenTransition.UnCoverRight
+                );
+        PaddingBottom: =24
+        PaddingLeft: =24
+        PaddingRight: =24
+        PaddingTop: =24
+        TabIndex: =0
+        Width: =88
+        X: =496
+        Y: =1004
+        ZIndex: =4
+

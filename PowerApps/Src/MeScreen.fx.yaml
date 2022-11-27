@@ -1,0 +1,173 @@
+MeScreen As screen:
+    Fill: =RGBA(230, 230, 230, 1)
+
+    Me_Back_Icon As icon.ArrowLeft:
+        Color: =RGBA(255, 255, 255, 1)
+        DisabledFill: =Me_Back_Icon.Fill
+        FocusedBorderColor: =Me_Back_Icon.BorderColor
+        Height: =49
+        HoverBorderColor: =ColorFade(Me_Back_Icon.BorderColor, 20%)
+        HoverColor: =ColorFade(Me_Back_Icon.Color, 20%)
+        HoverFill: =Me_Back_Icon.Fill
+        Icon: =Icon.ArrowLeft
+        OnSelect: =Back()
+        PressedBorderColor: =ColorFade(Me_Back_Icon.BorderColor, -20%)
+        PressedColor: =ColorFade(Me_Back_Icon.Color, -20%)
+        PressedFill: =Me_Back_Icon.Fill
+        Width: =50
+        X: =40
+        Y: =40
+        ZIndex: =2
+
+    Me_MeHeader_Lbl As label:
+        Align: =Center
+        Color: =RGBA(255, 255, 255, 1)
+        Fill: =RGBA(80, 80, 77, 1)
+        FocusedBorderColor: =Me_MeHeader_Lbl.BorderColor
+        FontWeight: =Bold
+        Height: =App.DesignHeight*10%
+        HoverBorderColor: =Me_MeHeader_Lbl.BorderColor
+        HoverColor: =Me_MeHeader_Lbl.Color
+        HoverFill: =Me_MeHeader_Lbl.Fill
+        PressedBorderColor: =Me_MeHeader_Lbl.BorderColor
+        PressedColor: =Me_MeHeader_Lbl.Color
+        PressedFill: =Me_MeHeader_Lbl.Fill
+        Size: =21
+        Text: =Concatenate("Hello ", User().FullName)
+        Width: =640
+        ZIndex: =3
+
+    Me_AccountBackGround_Lbl As label:
+        Color: =RGBA(255, 255, 255, 1)
+        Fill: =RGBA(255, 255, 255, 1)
+        FocusedBorderColor: =Me_AccountBackGround_Lbl.BorderColor
+        Height: =129
+        HoverBorderColor: =Me_AccountBackGround_Lbl.BorderColor
+        HoverColor: =Me_AccountBackGround_Lbl.Color
+        HoverFill: =Me_AccountBackGround_Lbl.Fill
+        PressedBorderColor: =Me_AccountBackGround_Lbl.BorderColor
+        PressedColor: =Me_AccountBackGround_Lbl.Color
+        PressedFill: =Me_AccountBackGround_Lbl.Fill
+        Size: =21
+        Text: ="Text"
+        Width: =640
+        Y: =121
+        ZIndex: =4
+
+    Me_Account_Image As image:
+        FocusedBorderColor: =Me_Account_Image.BorderColor
+        Height: =105
+        HoverBorderColor: =ColorFade(Me_Account_Image.BorderColor, 20%)
+        HoverFill: =ColorFade(Me_Account_Image.Fill, 20%)
+        Image: =User().Image
+        ImagePosition: =ImagePosition.Fill
+        PressedBorderColor: =ColorFade(Me_Account_Image.BorderColor, -20%)
+        PressedFill: =ColorFade(Me_Account_Image.Fill, -20%)
+        RadiusBottomLeft: =90
+        RadiusBottomRight: =90
+        RadiusTopLeft: =90
+        RadiusTopRight: =90
+        Width: =101
+        X: =25
+        Y: =128
+        ZIndex: =5
+
+    Me_AccountName_Lbl As label:
+        FocusedBorderColor: =Me_AccountName_Lbl.BorderColor
+        FontWeight: =Bold
+        Height: =44
+        HoverBorderColor: =Me_AccountName_Lbl.BorderColor
+        HoverColor: =Me_AccountName_Lbl.Color
+        HoverFill: =Me_AccountName_Lbl.Fill
+        PressedBorderColor: =Me_AccountName_Lbl.BorderColor
+        PressedColor: =Me_AccountName_Lbl.Color
+        PressedFill: =Me_AccountName_Lbl.Fill
+        Size: =18
+        Text: =User().FullName
+        Width: =483
+        X: =157
+        Y: =137
+        ZIndex: =6
+
+    Me_AccountEmail_Lbl As label:
+        FocusedBorderColor: =Me_AccountEmail_Lbl.BorderColor
+        Height: =44
+        HoverBorderColor: =Me_AccountEmail_Lbl.BorderColor
+        HoverColor: =Me_AccountEmail_Lbl.Color
+        HoverFill: =Me_AccountEmail_Lbl.Fill
+        PressedBorderColor: =Me_AccountEmail_Lbl.BorderColor
+        PressedColor: =Me_AccountEmail_Lbl.Color
+        PressedFill: =Me_AccountEmail_Lbl.Fill
+        Size: =16
+        Text: =User().Email
+        Width: =483
+        X: =157
+        Y: =173
+        ZIndex: =7
+
+    Me_Signout_Lbl As label:
+        Align: =Center
+        BorderColor: =RGBA(207, 110, 75, 1)
+        BorderThickness: =1
+        Color: =RGBA(0, 18, 107, 1)
+        Fill: =RGBA(255, 255, 255, 1)
+        FocusedBorderColor: =Me_Signout_Lbl.BorderColor
+        Font: =Font.'Segoe UI'
+        FontWeight: =FontWeight.Semibold
+        Height: =80
+        HoverBorderColor: =Me_Signout_Lbl.BorderColor
+        HoverColor: =Me_Signout_Lbl.Color
+        HoverFill: =Me_Signout_Lbl.Fill
+        OnSelect: =Exit(true)
+        PressedBorderColor: =Me_Signout_Lbl.BorderColor
+        PressedColor: =Me_Signout_Lbl.Color
+        PressedFill: =Me_Signout_Lbl.Fill
+        Size: =21
+        Text: ="Log out"
+        Width: =550
+        X: =47
+        Y: =1014
+        ZIndex: =8
+
+    Me_Back_Icon_1 As icon.ArrowLeft:
+        Color: =RGBA(255, 255, 255, 1)
+        DisabledFill: =Me_Back_Icon_1.Fill
+        FocusedBorderColor: =Me_Back_Icon_1.BorderColor
+        Height: =49
+        HoverBorderColor: =ColorFade(Me_Back_Icon_1.BorderColor, 20%)
+        HoverColor: =ColorFade(Me_Back_Icon_1.Color, 20%)
+        HoverFill: =Me_Back_Icon_1.Fill
+        Icon: =Icon.ArrowLeft
+        OnSelect: =Back()
+        PressedBorderColor: =ColorFade(Me_Back_Icon_1.BorderColor, -20%)
+        PressedColor: =ColorFade(Me_Back_Icon_1.Color, -20%)
+        PressedFill: =Me_Back_Icon_1.Fill
+        Width: =50
+        X: =40
+        Y: =30
+        ZIndex: =9
+
+    Me_Signout_Lbl_1 As label:
+        Align: =Center
+        BorderColor: =RGBA(80, 80, 77, 1)
+        BorderThickness: =1
+        Color: =RGBA(0, 18, 107, 1)
+        Fill: =RGBA(255, 255, 255, 1)
+        FocusedBorderColor: =Me_Signout_Lbl_1.BorderColor
+        Font: =Font.'Segoe UI'
+        FontWeight: =FontWeight.Semibold
+        Height: =80
+        HoverBorderColor: =Me_Signout_Lbl_1.BorderColor
+        HoverColor: =Me_Signout_Lbl_1.Color
+        HoverFill: =Me_Signout_Lbl_1.Fill
+        OnSelect: =Navigate(DebugViewer, ScreenTransition.None)
+        PressedBorderColor: =Me_Signout_Lbl_1.BorderColor
+        PressedColor: =Me_Signout_Lbl_1.Color
+        PressedFill: =Me_Signout_Lbl_1.Fill
+        Size: =21
+        Text: ="Debug view"
+        Width: =550
+        X: =47
+        Y: =283
+        ZIndex: =11
+

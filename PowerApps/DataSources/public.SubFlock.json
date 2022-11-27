@@ -1,0 +1,26 @@
+[
+  {
+    "ApiId": "/providers/microsoft.powerapps/apis/shared_postgresql",
+    "CdpRevision": {
+      "BaseUrl": "/",
+      "LastChangedTimeString": "2022-05-26T17:26:06.4710000Z",
+      "RevisionNumber": 1
+    },
+    "ConnectedDataSourceInfoNameMapping": {
+      "Active": "Active",
+      "AmountOfAnimals": "AmountOfAnimals",
+      "EndDate": "EndDate",
+      "fk_Banda_SubFlock": "fk_Banda_SubFlock",
+      "id": "id",
+      "MainFlock_Id": "MainFlock_Id",
+      "PlacementDate": "PlacementDate",
+      "SubFlockReference": "SubFlockReference"
+    },
+    "DatasetName": "default",
+    "EncodeDataset": true,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "Name": "public.SubFlock",
+    "Type": "ConnectedDataSourceInfo"
+  }
+]

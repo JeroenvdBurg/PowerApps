@@ -1,0 +1,314 @@
+"FarmerStartSceen As screen.'phoneLayout_FluidGridWithHeaderPageLayout_ver3.0'":
+    OnVisible: |
+        =Set(
+            globalFarmerId,
+            farmerId
+        );
+        Set(
+            globalFarmerFullName,
+            fullName
+        );
+        ClearCollect(
+            FarmerBandasWithLastProduction,
+            AddColumns(
+                AllBandas,
+                "LastProductionDate",
+                First(
+                    SortByColumns(
+                        Filter(
+                            ChickenProduction,
+                            FarmerId = globalFarmerId,
+                            BandaReference = BandaReference
+                        ),
+                        "Date",
+                        Descending
+                    )
+                ).Date
+            )
+        );
+
+    RectQuickActionBar6 As rectangle:
+        Fill: =PrimaryBlack
+        Height: =88
+        Width: =Parent.Width
+        ZIndex: =1
+
+    LblAppName6 As label:
+        Align: =Align.Center
+        Height: =88
+        Size: =27
+        Text: =globalFarmerFullName
+        Width: =Parent.Width
+        ZIndex: =2
+
+    Canvas5 As fluidGrid.fluidGridWithBlankCard:
+        BorderThickness: =0
+        Height: =Parent.Height - Self.Y
+        Width: =Parent.Width
+        Y: =RectQuickActionBar6.Y + RectQuickActionBar6.Height
+        ZIndex: =3
+
+        TabControlCard As dataCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =0
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =90
+            Width: =Parent.Width
+            X: =0
+            Y: =0
+            ZIndex: =1
+
+            TabControl_2 As TabControl:
+                Height: =75
+                IsVertical: =TabControl_2.Height > TabControl_2.Width
+                Items: |-
+                    =   Table(    {
+                            Label: "New",
+                            Screen: FarmerStartSceen,
+                            Icon: "",
+                            SelectedIcon:""
+                       },
+                       {
+                            Label: "Transactions",
+                            Screen: FarmerTransactionData,
+                            Icon: "",
+                            SelectedIcon:""
+                       },
+                       {
+                            Label: "Productions",
+                            Screen: FarmerProductionData,
+                            Icon: "",
+                            SelectedIcon:""
+                       }
+                       )
+                SelectedColor: =RGBA(207, 110, 75, 1)
+                Y: =10
+
+        ButtonCard As dataCard.blankCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =716
+            Visible: |
+                =true
+            Width: =640
+            X: =0
+            Y: =1
+            ZIndex: =2
+
+            EmptyBanda As groupContainer.manualLayoutContainer:
+                Height: =617
+                Visible: =IsEmpty(FarmerBandas)
+                Width: =640
+                ZIndex: =8
+
+                EmtpyBanda_1 As EmtpyBanda:
+                    Height: =615
+                    Visible: =true
+                    Width: =638
+
+            "'Banda overview' As groupContainer.manualLayoutContainer":
+                Height: =703
+                Visible: =!IsEmpty(FarmerBandas)
+                Width: =640
+                ZIndex: =9
+
+                AddBandaProductionGroup As group:
+                    Height: =5
+                    Width: =5
+                    X: =20
+                    Y: =-120
+                    ZIndex: =3
+
+                    ArrivalButton_4 As button:
+                        Fill: =RGBA(207, 110, 75, 1)
+                        Height: =100
+                        HoverBorderColor: =ColorFade(Self.Fill, 20%)
+                        HoverFill: =ColorFade(Self.Fill, -20%)
+                        OnSelect: |-
+                            =Navigate(AddNewProduction, ScreenTransition.Cover, {farmerId: farmerId});
+                        Size: =24
+                        Text: ="Add production"
+                        Width: =500
+                        X: =75
+                        Y: =256
+                        ZIndex: =1
+
+                    Icon2_2 As icon.Add:
+                        Color: =RGBA(255, 255, 255, 1)
+                        Height: =46
+                        Icon: =Icon.Add
+                        OnSelect: |-
+                            =Navigate(AddNewProduction, ScreenTransition.Cover, {farmerId: farmerId});
+                        Width: =49
+                        X: =95
+                        Y: =283
+                        ZIndex: =2
+
+                AddTransactionGroup As group:
+                    Height: =5
+                    Width: =5
+                    X: =20
+                    Y: =18
+                    ZIndex: =5
+
+                    ArrivalButton_3 As button:
+                        Fill: =RGBA(207, 110, 75, 1)
+                        Height: =100
+                        HoverBorderColor: =ColorFade(Self.Fill, 20%)
+                        HoverFill: =ColorFade(Self.Fill, -20%)
+                        OnSelect: |-
+                            =Navigate(AddNewTransaction, ScreenTransition.Cover, {farmerId: farmerId});
+                        PaddingRight: =
+                        Size: =24
+                        Text: ="Add transaction"
+                        Width: =500
+                        X: =73
+                        Y: =382
+                        ZIndex: =3
+
+                    Icon2_1 As icon.Add:
+                        Color: =RGBA(255, 255, 255, 1)
+                        Height: =46
+                        Icon: =Icon.Add
+                        OnSelect: |-
+                            =Navigate(AddNewTransaction, ScreenTransition.Cover, {farmerId: farmerId});
+                        Width: =49
+                        X: =95
+                        Y: =409
+                        ZIndex: =4
+
+                DataTable4 As dataTable.datatable:
+                    BorderColor: =RGBA(0, 0, 0, 1)
+                    BorderStyle: =BorderStyle.Solid
+                    BorderThickness: =1
+                    DisplayMode: =DisplayMode.Edit
+                    Fill: =RGBA(0, 0, 0, 0)
+                    HeadingFill: =RGBA(116, 116, 116, 1)
+                    HeadingSize: =21
+                    Height: =177
+                    Items: =Filter(FarmerBandasWithLastProduction, fk_Banda_Farmer = globalFarmerId)
+                    SelectedFill: =RGBA(0, 0, 0, 0)
+                    Size: =21
+                    Width: =590
+                    X: =21
+                    Y: =6
+                    ZIndex: =7
+
+                    Reference_Column6 As dataTableColumn.textualColumn:
+                        AutoWidth: =false
+                        DisplayMode: =DisplayMode.Edit
+                        FieldDisplayName: ="Reference"
+                        FieldName: ="Reference"
+                        FieldVariantName: ="textualColumn"
+                        Height: =Parent.Height
+                        LayoutHeight: =Parent.Height
+                        Order: =1
+                        Text: =ThisItem.Reference
+                        Width: =100
+                        X: =0
+                        Y: =0
+                        ZIndex: =13
+
+                    CurrentBirds_Column5 As dataTableColumn.textualColumn:
+                        AutoWidth: |
+                            =false
+                        DisplayMode: =DisplayMode.Edit
+                        FieldDisplayName: ="CurrentBirds"
+                        FieldName: ="CurrentBirds"
+                        FieldVariantName: ="textualColumn"
+                        Height: =Parent.Height
+                        LayoutHeight: =Parent.Height
+                        Order: =2
+                        Text: =ThisItem.CurrentBirds
+                        Width: =100
+                        X: =0
+                        Y: =0
+                        ZIndex: =14
+
+                    LastProductionDate_Column2 As dataTableColumn.textualColumn:
+                        AutoWidth: =false
+                        DisplayMode: =DisplayMode.Edit
+                        FieldDisplayName: ="LastProductionDate"
+                        FieldName: ="LastProductionDate"
+                        FieldVariantName: ="textualColumn"
+                        Height: =Parent.Height
+                        LayoutHeight: =Parent.Height
+                        Order: =3
+                        Text: =ThisItem.LastProductionDate
+                        Width: =100
+                        X: =0
+                        Y: =0
+                        ZIndex: =15
+
+    IconBackarrow1_9 As icon.ChevronLeft:
+        AccessibleLabel: =Self.Tooltip
+        Height: =88
+        Icon: =Icon.ChevronLeft
+        OnSelect: =Navigate(Farmers, ScreenTransition.UnCoverRight)
+        PaddingBottom: =24
+        PaddingLeft: =24
+        PaddingRight: =24
+        PaddingTop: =24
+        TabIndex: =0
+        Tooltip: ="Terug naar lijst"
+        Width: =88
+        ZIndex: =5
+
+    MapIcon_2 As image:
+        Height: =65
+        Image: ='white-map-marker-icon-467080'
+        OnSelect: |-
+            =Navigate(FarmerLocation, ScreenTransition.Cover, {farmerId: farmerId});
+        Width: =57
+        X: =556
+        Y: =8
+        ZIndex: =6
+
+    "Gallery1 As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver4.0'":
+        Height: =456
+        Items: =Filter(FarmerBandasWithLastProduction, fk_Banda_Farmer = globalFarmerId)
+        Layout: =Layout.Vertical
+        TemplatePadding: =0
+        TemplateSize: =Min(160, Self.Height - 60)
+        Y: =680
+        ZIndex: =7
+
+        Title1 As label:
+            Height: =Self.Size * 1.8
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Text: =ThisItem.Reference
+            VerticalAlign: =VerticalAlign.Top
+            Width: =Parent.TemplateWidth -- 104
+            X: =24
+            Y: =44
+            ZIndex: =2
+
+        Subtitle1 As label:
+            Height: =Self.Size * 1.8
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Text: =ThisItem.LastProductionDate
+            VerticalAlign: =VerticalAlign.Top
+            Width: =Title1.Width
+            X: =Title1.X
+            Y: =Title1.Y + Title1.Height + 4
+            ZIndex: =3
+
+        Separator1 As rectangle:
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =5
+

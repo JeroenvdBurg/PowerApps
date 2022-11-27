@@ -1,0 +1,182 @@
+"FarmerLocation As screen.'phoneLayout_FluidGridWithHeaderPageLayout_ver3.0'":
+    OnVisible: |
+        =Set(
+            FarmerGeoCordinates,
+            Filter(
+                AllFarmers,
+                id = FarmerList.Selected.id
+            );
+            
+        );
+
+    RectQuickActionBar3_1 As rectangle:
+        Fill: =RGBA(80, 80, 77, 1)
+        Height: =88
+        Width: =Parent.Width
+        ZIndex: =1
+
+    LblAppName3_1 As label:
+        Align: =Align.Center
+        Height: =88
+        Size: =27
+        Text: ="Location"
+        Width: =Parent.Width
+        ZIndex: =2
+
+    Canvas1_1 As fluidGrid.fluidGridWithBlankCard:
+        BorderThickness: =
+        Height: =Parent.Height - Self.Y
+        Width: =Parent.Width
+        Y: =RectQuickActionBar3_1.Y + RectQuickActionBar3_1.Height
+        ZIndex: =3
+
+        DataCard10 As dataCard.blankCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =683
+            Width: =640
+            X: =0
+            Y: =0
+            ZIndex: =1
+
+            "Map2 As 'Map (preview)'.pcfdataset":
+                BorderColor: =RGBA(0, 18, 107, 1)
+                CurrentLocation: =true
+                CurrentLocationLatitude: =Location.Latitude
+                CurrentLocationLongitude: =Location.Longitude
+                DisplayMode: =DisplayMode.Edit
+                Height: =675
+                Items: =FarmerGeoCordinates
+                ItemsLatitudes: ="Latitude"
+                ItemsLongitudes: ="Longitude"
+                PinColor: =RGBA(29, 114, 169, 1)
+                Width: =640
+                X: =0
+                Y: =0
+                ZIndex: =1
+
+        DataCard11 As dataCard.blankCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =254
+            Width: =640
+            X: =0
+            Y: =1
+            ZIndex: =2
+
+            Label11 As label:
+                Height: =76
+                Size: =21
+                Text: |-
+                    ="Latitude: " & Location.Latitude 
+                Width: =560
+                X: =55
+                Y: =219
+                ZIndex: =1
+
+            Label11_1 As label:
+                Height: =70
+                Size: =21
+                Text: |-
+                    ="Longitude: " & Location.Longitude 
+                Width: =560
+                X: =55
+                Y: =169
+                ZIndex: =2
+
+            Button1_1 As button:
+                Align: =Center
+                DisplayMode: |-
+                    =If(Connection.Connected && Not(OfflineMode),
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled)
+                Fill: =RGBA(207, 110, 75, 1)
+                Height: =90
+                HoverBorderColor: =ColorFade(Self.Fill, 20%)
+                HoverFill: =ColorFade(Self.Fill, -20%)
+                OnSelect: |-
+                    =UpdateContext({showhide:false});UpdateContext({showhide:true})
+                Size: =24
+                Text: ="Save current location"
+                Width: =529
+                X: =55
+                Y: =79
+                ZIndex: =3
+
+    IconBackarrow1_7 As icon.ChevronLeft:
+        AccessibleLabel: =Self.Tooltip
+        Height: =88
+        Icon: =Icon.ChevronLeft
+        OnSelect: =Navigate(FarmerStartSceen, ScreenTransition.UnCoverRight)
+        PaddingBottom: =24
+        PaddingLeft: =24
+        PaddingRight: =24
+        PaddingTop: =24
+        TabIndex: =0
+        Tooltip: ="Terug naar lijst"
+        Width: =88
+        ZIndex: =4
+
+    Dialog_1 As Dialog:
+        Buttons: |-
+            =Table({Label: "Cancel", Fill:"#FFFFFF", Color:"#000000"} ,{Label: "Ok", Fill: "#cf6e4b", Color:"#FFFFFF"})
+        ChildTabPriority: =true
+        Description: ="Are you sure you want to update the location with your current location?"
+        EnableChildFocus: =true
+        OpenClose: =showhide
+        OverlayColor: =RGBA(166, 166, 166, 0.81)
+        Title: ="Confirmation"
+        Visible: =Dialog_1.IsOpen
+        ZIndex: =10
+
+    dialog_eventhandler As toggleSwitch:
+        Default: =Dialog_1.IsOpen
+        Height: =55
+        OnUncheck: |-
+            =Switch(
+                Dialog_1.SelectedButton.Label,
+                "Ok",
+                Patch(
+                    'public.Farmer',
+                    {
+                        id: globalFarmerId,
+                        Latitude: Location.Latitude,
+                        Longitude: Location.Longitude
+                    }
+                );
+                ClearCollect(
+                    AllFarmers,
+                    Filter(
+                        'public.Farmer',
+                        Status = "Selected" Or Status = "On-boarded"
+                    )
+                );
+                Set(
+                FarmerGeoCordinates,
+                Filter(
+                    AllFarmers,
+                    id = FarmerList.Selected.id
+                    )    
+                );
+                Notify(
+                    "Location saved",
+                    NotificationType.Success
+                ),
+                "Cancel",
+                Navigate(
+                    FarmerLocation,
+                    ScreenTransition.None
+                )
+            )
+        ShowLabel: =false
+        Size: =21
+        Visible: =false
+        Width: =83
+        X: =557
+        Y: =1033
+        ZIndex: =11
+

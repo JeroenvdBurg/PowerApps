@@ -1,0 +1,220 @@
+NumericUpDown As CanvasComponent:
+    BorderColor: =RGBA(0, 121, 187, 1)
+    BorderRadius: |
+        =4
+    BorderThickness: |+
+        =2
+        
+    ButtonsColor: =RGBA(0, 121, 187, 1)
+    DecrementButtonIcon: =
+    Default: =0
+    Fill: =RGBA(0, 0, 0, 0)
+    Height: =70
+    Increment: =1
+    Max: =100
+    Min: =-100
+    OnReset: =Set(numValue, 0);
+    Styles: |-
+        =Table({Key:"", Value:""})
+    TabIndex: =100
+    Value: =numValue
+    Width: =290
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    DefaultStyle As button:
+        BorderColor: =RGBA(0, 0, 0, 0)
+        BorderStyle: =BorderStyle.None
+        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+        Fill: =RGBA(164, 38, 44, 1)
+        FocusedBorderColor: =DefaultStyle.BorderColor
+        Font: =Font.'Segoe UI'
+        Height: =35
+        HoverBorderColor: =RGBA(0, 0, 0, 0)
+        HoverFill: =ColorFade(RGBA(164, 38, 44, 1), -10%)
+        PressedBorderColor: =ColorFade(RGBA(164, 38, 44, 1), -50%)
+        PressedColor: =RGBA(255, 255, 255, 1)
+        PressedFill: =ColorFade(RGBA(164, 38, 44, 1), -30%)
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Size: =24
+        Text: ="Button"
+        Visible: =false
+        Width: =20
+        X: =280
+        Y: =35
+        ZIndex: =1
+
+    NudBackground As button:
+        BorderColor: =NumericUpDown.BorderColor
+        BorderThickness: =NumericUpDown.BorderThickness
+        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+        Fill: =RGBA(0, 0, 0, 0)
+        FocusedBorderColor: =NudBackground.BorderColor
+        Font: =Font.'Segoe UI'
+        Height: =NumericUpDown.Height -  NudBackground.BorderThickness
+        HoverBorderColor: =NudBackground.BorderColor
+        HoverFill: =RGBA(56, 96, 178, 0)
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        PressedBorderColor: =NudBackground.BorderColor
+        PressedColor: =RGBA(255, 255, 255, 1)
+        PressedFill: =RGBA(164, 38, 44,0)
+        RadiusBottomLeft: =NumericUpDown.BorderRadius
+        RadiusBottomRight: =NumericUpDown.BorderRadius
+        RadiusTopLeft: =NumericUpDown.BorderRadius
+        RadiusTopRight: =NumericUpDown.BorderRadius
+        Size: =24
+        Text: =""
+        Width: =263
+        X: =27
+        Y: =NudBackground.BorderThickness /2
+        ZIndex: =2
+
+    UpBackground As button:
+        BorderColor: =RGBA(0, 0, 0, 0)
+        BorderStyle: =BorderStyle.None
+        BorderThickness: =0
+        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+        Fill: =If(IsBlank(NumericUpDown.ButtonsColor), DefaultStyle.Fill,NumericUpDown.ButtonsColor)
+        FocusedBorderColor: =UpBackground.BorderColor
+        Font: =Font.'Segoe UI'
+        Height: =68
+        HoverBorderColor: =RGBA(0, 0, 0, 0)
+        HoverFill: =ColorFade(RGBA(164, 38, 44, 1), -10%)
+        PressedBorderColor: =ColorFade(RGBA(164, 38, 44, 1), -50%)
+        PressedColor: =RGBA(255, 255, 255, 1)
+        PressedFill: =ColorFade(RGBA(164, 38, 44, 1), -30%)
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =NudBackground.RadiusTopRight
+        Size: =24
+        Text: |-
+            ="
+            "
+        Width: =67
+        X: =UpButton.X
+        Y: =UpButton.Y
+        ZIndex: =3
+
+    DownBackground As button:
+        BorderColor: =RGBA(0, 0, 0, 0)
+        BorderStyle: =None
+        BorderThickness: =0
+        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+        Fill: =If(IsBlank(NumericUpDown.ButtonsColor), DefaultStyle.Fill,NumericUpDown.ButtonsColor)
+        FocusedBorderColor: =DownBackground.BorderColor
+        Font: =Font.'Segoe UI'
+        FontWeight: =FontWeight.Bold
+        Height: =68
+        HoverBorderColor: =RGBA(0, 0, 0, 0)
+        HoverFill: =ColorFade(RGBA(164, 38, 44, 1), -10%)
+        PressedBorderColor: =ColorFade(RGBA(164, 38, 44, 1), -50%)
+        PressedColor: =RGBA(255, 255, 255, 1)
+        PressedFill: =ColorFade(RGBA(164, 38, 44, 1), -30%)
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =NudBackground.RadiusTopLeft
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Size: =24
+        Text: |-
+            ="
+            "
+        Width: =66
+        X: =27
+        Y: =1
+        ZIndex: =4
+
+    DownButton As image:
+        BorderColor: =RGBA(128, 128, 128, 1)
+        BorderStyle: =BorderStyle.None
+        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+        DisabledFill: =RGBA(0, 0, 0, 0)
+        DisplayMode: =If(numValue > NumericUpDown.Min, DisplayMode.Edit, DisplayMode.Disabled)
+        FocusedBorderColor: =DownButton.BorderColor
+        FocusedBorderThickness: =4
+        Height: =66
+        HoverBorderColor: =RGBA(0, 0, 0, 0)
+        HoverFill: =RGBA(0, 0, 0, 0)
+        Image: |-
+            =If(!IsBlank(NumericUpDown.DecrementButtonIcon),NumericUpDown.DecrementButtonIcon,"data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' width='19.25' height='3.465' viewBox='0 0 19.25 6'>
+              <rect id='Rectangle_4' data-name='Rectangle 4' width='3' height='19.25' transform='translate(19.25) rotate(90)' fill='#FFFFFF'/>
+            </svg>"))
+        OnSelect: =If(IsBlank(numValue), Set(numValue, NumericUpDown.Default));If(numValue > NumericUpDown.Min, Set(numValue, numValue - NumericUpDown.Increment)) 
+        PaddingBottom: =If(!IsBlank(LookUp(NumericUpDown.Styles, Key = "NudIconPadding").Value),Value(LookUp(NumericUpDown.Styles, Key = "NudIconPadding").Value), 7)
+        PaddingLeft: =If(!IsBlank(LookUp(NumericUpDown.Styles, Key = "NudIconPadding").Value),Value(LookUp(NumericUpDown.Styles, Key = "NudIconPadding").Value), 7)
+        PaddingRight: =If(!IsBlank(LookUp(NumericUpDown.Styles, Key = "NudIconPadding").Value),Value(LookUp(NumericUpDown.Styles, Key = "NudIconPadding").Value), 7)
+        PaddingTop: =If(!IsBlank(LookUp(NumericUpDown.Styles, Key = "NudIconPadding").Value),Value(LookUp(NumericUpDown.Styles, Key = "NudIconPadding").Value), 7)
+        PressedBorderColor: =RGBA(0, 0, 0, 0)
+        PressedFill: =RGBA(0, 0, 0, 0)
+        Width: =64
+        X: =30
+        Y: =1
+        ZIndex: =5
+
+    TextInput As text:
+        Align: =Right
+        BorderColor: =RGBA(179, 179, 179, 1)
+        BorderStyle: =None
+        BorderThickness: =0
+        Color: =RGBA(51, 51, 51, 1)
+        Default: =If(IsBlank(numValue), NumericUpDown.Default, numValue)
+        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+        FocusedBorderColor: =TextInput.BorderColor
+        Font: =If(!IsBlank(LookUp(NumericUpDown.Styles, Key = "Font").Value),LookUp(NumericUpDown.Styles, Key = "Font").Value, Font.'Segoe UI') 
+        Format: =TextFormat.Number
+        Height: =NudBackground.Height - NudBackground.BorderThickness
+        HoverBorderColor: =ColorFade(RGBA(164, 38, 44, 1), -30%)
+        HoverColor: =RGBA(51, 51, 51, 1)
+        HoverFill: =RGBA(255, 255, 255, 1)
+        OnChange: =Set(numValue, Value(TextInput.Text))
+        PaddingRight: =10
+        PressedBorderColor: =RGBA(164, 38, 44, 1)
+        PressedColor: =RGBA(51, 51, 51, 1)
+        PressedFill: =RGBA(255, 255, 255, 1)
+        RadiusBottomLeft: =NudBackground.RadiusBottomLeft
+        RadiusBottomRight: =0
+        RadiusTopLeft: =NudBackground.RadiusTopLeft
+        RadiusTopRight: =0
+        Size: =21
+        TabIndex: =Parent.TabIndex
+        Width: =96
+        X: =119
+        Y: =NumericUpDown.Height /2 - TextInput.Height/2
+        ZIndex: =6
+
+    UpButton As image:
+        BorderColor: =RGBA(128, 128, 128, 1)
+        BorderStyle: =BorderStyle.None
+        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+        DisabledFill: =RGBA(0, 0, 0, 0)
+        DisplayMode: =If(numValue < NumericUpDown.Max, DisplayMode.Edit, DisplayMode.Disabled)
+        FocusedBorderColor: =UpButton.BorderColor
+        FocusedBorderThickness: =4
+        Height: =67
+        HoverBorderColor: =RGBA(0, 0, 0, 0)
+        HoverFill: =RGBA(0, 0, 0, 0)
+        Image: |
+            =If(!IsBlank(NumericUpDown.IncrementButtonIcon),NumericUpDown.IncrementButtonIcon,"data:image/svg+xml,"
+            & EncodeUrl("<svg id='Group_1' data-name='Group 1' xmlns='http://www.w3.org/2000/svg' width='19.25' height='13' viewBox='0 0 19.25 19.25'>
+              <rect id='Rectangle_2' data-name='Rectangle 2' width='3' height='19.25' transform='translate(7.892)' fill='#FFFFFF'/>
+              <rect id='Rectangle_3' data-name='Rectangle 3' width='3' height='19.25' transform='translate(19.25 7.892) rotate(90)' fill='#FFFFFF'/>
+            </svg>"))
+        OnSelect: =If(IsBlank(numValue), Set(numValue, NumericUpDown.Default));If(numValue < NumericUpDown.Max, Set(numValue, numValue + NumericUpDown.Increment))
+        PaddingBottom: =If(!IsBlank(LookUp(NumericUpDown.Styles, Key = "NudIconPadding").Value),Value(LookUp(NumericUpDown.Styles, Key = "NudIconPadding").Value), 7)
+        PaddingLeft: =If(!IsBlank(LookUp(NumericUpDown.Styles, Key = "NudIconPadding").Value),Value(LookUp(NumericUpDown.Styles, Key = "NudIconPadding").Value), 7)
+        PaddingRight: =If(!IsBlank(LookUp(NumericUpDown.Styles, Key = "NudIconPadding").Value),Value(LookUp(NumericUpDown.Styles, Key = "NudIconPadding").Value), 7)
+        PaddingTop: =If(!IsBlank(LookUp(NumericUpDown.Styles, Key = "NudIconPadding").Value),Value(LookUp(NumericUpDown.Styles, Key = "NudIconPadding").Value), 7)
+        PressedBorderColor: =RGBA(0, 0, 0, 0)
+        PressedFill: =RGBA(0, 0, 0, 0)
+        Width: =67
+        X: =223
+        Y: =1
+        ZIndex: =7
+
